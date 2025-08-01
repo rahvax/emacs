@@ -164,28 +164,31 @@
   (require 'org-roam-protocol)
   ;;org-roam templates
   (setq org-roam-capture-templates
-   '(("g" "general" plain "#+filetags: :%?:"
+   '(("g" "General" plain "#+filetags: :%?:"
       :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
       :unnarrowed t)
-     ("d" "documentation" plain "- source ::\n- fonts: \n\n* Index Of\n %?"
+     ("d" "Documentations" plain "- source ::\n- fonts: \n\n* Index Of\n %?"
       :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
       :unarrowed t)
-     ("a" "aeternus content" plain "- source ::\n\n* Tópicos\n* Metas\n* Conteúdos\n* Questões e Projetos\n* Prova\n%?"
-      :target (file+head "aeternus/${slug}.org" "#+title: Aeternus: ${title}\n#+filetags: :aeternus:\n#+author: Rahvax%n\n#+date: %U\n\n")
+     ("a" "Aeternus Notes" plain (file "~/Documents/org/templates/aeternus_default.org")
+      :if-new (file+head "aeternus/notes_${slug}.org" "#+title: Aeternus: ${title}\n#+date: %U\n#+startup: latexpreview inlineimages\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:\n\n")
       :unarrowed t)
-     ("k" "akkadian notes" plain "- source ::\n- fonts: \n%?"
+     ("k" "Akkadian Notes" plain "- source ::\n- fonts: \n%?"
       :target (file+head "akkadian/${slug}.org" "#+title: Akkadian: ${title}\n#+filetags: :akkadian:\n#+author: Rahvax%n\n#+date: %U\n\n")
       :unarrowed t)
-     ("s" "sumerian notes" plain "- source ::\n- fonts: \n%?"
+     ("s" "Sumerian Notes" plain "- source ::\n- fonts: \n%?"
       :target (file+head "sumerian/${slug}.org" "#+title: Sumerian: ${title}\n#+filetags: :sumerian:\n#+author: Rahvax%n\n#+date: %U\n\n")
+      :unarrowed t)
+     ("c" "Aeternus Ancients" plain (file "~/Documents/org/templates/aeternus_ancient.org")
+      :if-new (file+head "aeternus/ancient_${slug}.org" "#+title: Aeternus: ${title}\n#+date: %U\n#+startup: latexpreview inlineimages\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:ancient:language:\n\n")
       :unarrowed t)
      ("i" "IA" plain "- source ::\n\n%?"
       :target (file+head "ia/${slug}.org" "#+title: IA: ${title}\n#+filetags: :IA:\n#+author: Rahvax%n\n#+date: %U\n\n")
       :unarrowed t)
-     ("t" "technology" plain "- fonts ::\n- source ::\n%?"
+     ("t" "Technology" plain "- fonts ::\n- source ::\n%?"
       :target (file+head "tech/${slug}.org" "#+title: Tech: ${title}\n#+filetags: :tech:\n#+author: Rahvax%n\n#+date: %U\n\n")
       :unarrowed t)
-     ("r" "reading notes" plain "%?"
+     ("r" "Reading Notes" plain "%?"
       :target (file+head "${citar-citekey}.org" "#+title: ${note-title}\n#+created: %U\n")
       :unarrowed t)))
   :bind
@@ -774,4 +777,3 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
 
 (add-hook 'rust-mode-hook 'eglot-ensure)
 #+end_src
-
