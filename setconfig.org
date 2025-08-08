@@ -4,6 +4,8 @@
 + Para exportar utilize ~C-c C-v t~
 
 * Configurações básicas
+São configurações básicas do editor em si. Aqui é onde defino configurações que representem o editor e suas funções nativas.
+
 ~Custom.el~
 #+begin_src emacs-lisp
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -40,6 +42,8 @@
 #+end_src
 
 ~Binds do Emacs~
+O atalho colocado aqui é o de =C-x c= para abrir a configuração do Emacs (esse arquivo).
+Para funcionar é necessário que o arquivo esteja em =/Documents/org/roam/= com o nome de =emacs_config.org=.
 #+begin_src emacs-lisp
 (use-package emacs
   :config
@@ -51,6 +55,9 @@
 #+end_src
 
 ~MELPA~
+Essa configuração é para definir o mirror do =MELPA=.
+Há algumas coisas comentadas nesse bloco, e isso é proposital:
+Na primeira instalação é necessário descomentar, mas após, só vai tornar o Emacs lento.
 #+begin_src emacs-lisp
 ;;(require 'package)
 (add-to-list 'package-archives
@@ -60,8 +67,10 @@
 #+end_src
 
 * Configurações pacotes
+Aqui vai encontrar configurações de pacotes nativos ou instalados.
 
 ** ~Orderless~
+É um autocomplete para o =M-x=, ajuda a ficar mais fácil de pesquisar funções e comandos do Emacs.
 #+begin_src emacs-lisp
 (use-package orderless
   :custom
@@ -77,6 +86,7 @@
 #+end_src
 
 ~Configuração PDF-Tools~
+Necessário para visualizar PDFs pelo Emacs.
 #+begin_src emacs-lisp
 (use-package pdf-tools
   :mode ("\\.pdf\\'" . pdf-view-mode)
@@ -90,8 +100,9 @@
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 #+end_src
 
-** =Org-mode=
+** =Orgs=
 ~Org-modern~
+Apenas um visual mais bonito para arquivos Org-mode. Essa função ativa ele sempre.
 #+begin_src emacs-lisp
 (use-package org-modern
   :after org
@@ -100,6 +111,8 @@
 #+end_src
 
 ~Org-agenda~
+Org-Agenda =[C-c a a]= é a agenda do Emacs.
+Aqui foi definido o arquivo de tarefas, =tasks.org=. 
 #+begin_src emacs-lisp
 (use-package org-agenda
   :custom
@@ -108,6 +121,8 @@
 #+end_src
 
 ~Org~
+Configurações para os arquivos de Org-mode.
+Aqui é definido os atalhos, capturas e outros.
 #+begin_src emacs-lisp
 (use-package org
   :ensure t
@@ -130,27 +145,57 @@
 ;  ; logging
   (org-log-done 'time)
   (org-log-into-drawer t)
-;;; Template
+;;; Templates
   (org-capture-templates
-   '(("t" "Tasks")
-      ("th" "Home" entry (file+olp "~/Documents/org/tasks.org" "Home")
+   '(("p" "Personal")
+      ("ph" "Home" entry (file+olp "~/Documents/org/tasks.org" "Home")
        "* TODO %? :home: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("tf" "Finance" entry (file+olp "~/Documents/org/tasks.org" "Finance")
-       "* TODO %? :fnc: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("tc" "Aeternus" entry (file+olp "~/Documents/org/tasks.org" "Aeternus")
-       "* TODO %? :aet: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("tr" "Read" entry (file+olp "~/Documents/org/tasks.org" "Read")
-       "* TOREAD %? :read: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("tg" "General Tasks" entry (file+olp "~/Documents/org/tasks.org" "General")
-       "* TODO %? :geral: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)))
-  :bind
+      ("pl" "Health" entry (file+olp "~/Documents/org/tasks.org" "Health")
+       "* TODO %? :helt: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("pp" "Project" entry (file+olp "~/Documents/org/tasks.org" "Project")
+       "* TODO %? :projc: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("pg" "General" entry (file+olp "~/Documents/org/tasks.org" "General")
+       "* TODO %? :gener: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      
+      ("f" "Finance")
+      ("fp" "Pay" entry (file+olp "~/Documents/org/tasks.org" "Pay")
+       "* TODO %? :pay: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("fw" "Work" entry (file+olp "~/Documents/org/tasks.org" "Work")
+       "* TODO %? :work: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("fi" "Investment" entry (file+olp "~/Documents/org/tasks.org" "Investment")
+       "* TODO %? :invmt: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("fb" "Bill" entry (file+olp "~/Documents/org/tasks.org" "Bill")
+       "* TODO %? :bill: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+
+      ("l" "Learn")
+      ("lr" "Read" entry (file+olp "~/Documents/org/tasks.org" "Read")
+       "* TODO %? :read: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("ls" "Research" entry (file+olp "~/Documents/org/tasks.org" "Research")
+       "* TODO %? :resch: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("lw" "Write" entry (file+olp "~/Documents/org/tasks.org" "Write")
+       "* TODO %? :write: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+
+      ("a" "Aeternus")
+      ("ac" "Challenger" entry (file+olp "~/Documents/org/tasks.org" "Research")
+       "* TODO %? :chalg: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("aq" "Question" entry (file+olp "~/Documents/org/tasks.org" "Question")
+       "* TODO %? :quest: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("ac" "Code" entry (file+olp "~/Documents/org/tasks.org" "Code")
+       "* TODO %? :code: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("ag" "General" entry (file+olp "~/Documents/org/tasks.org" "General")
+       "* TODO %? :gener: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ))
+  :bind ;; atalhos
   ("C-c a" . org-agenda)
   ("C-c l" . org-store-link)
   ("C-c c" . org-capture))
 #+end_src
 
 ** ~Org-roam~
+Aqui será definido os blocos do Org-roam, uma biblioteca de notas.
+
 ~Roam~
+Aqui é definido o diretório do Roam, templates, atalhos e outros.
 #+begin_src emacs-lisp
 (use-package org-roam
   :ensure t
@@ -171,22 +216,22 @@
       :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
       :unarrowed t)
      ("a" "Aeternus Notes" plain (file "~/Documents/org/templates/aeternus_default.org")
-      :if-new (file+head "aeternus/notes_${slug}.org" "#+title: Aeternus: ${title}\n#+date: %U\n#+startup: latexpreview inlineimages\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:\n\n")
+      :if-new (file+head "aeternus/notes_${slug}.org" "#+title: Aeternus: ${title}\n#+author: %n\n#+date: %U\n#+startup: latexpreview inlineimages\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:\n\n")
       :unarrowed t)
      ("k" "Akkadian Notes" plain "- source ::\n- fonts: \n%?"
-      :target (file+head "akkadian/${slug}.org" "#+title: Akkadian: ${title}\n#+filetags: :akkadian:\n#+author: Rahvax%n\n#+date: %U\n\n")
+      :target (file+head "akkadian/${slug}.org" "#+title: Akkadian: ${title}\n#+author: %n\n#+filetags: :akkadian:\n#+author: Rahvax%n\n#+date: %U\n\n")
       :unarrowed t)
      ("s" "Sumerian Notes" plain "- source ::\n- fonts: \n%?"
-      :target (file+head "sumerian/${slug}.org" "#+title: Sumerian: ${title}\n#+filetags: :sumerian:\n#+author: Rahvax%n\n#+date: %U\n\n")
+      :target (file+head "sumerian/${slug}.org" "#+title: Sumerian: ${title}\n#+author: %n\n#+filetags: :sumerian:\n#+author: Rahvax%n\n#+date: %U\n\n")
       :unarrowed t)
      ("c" "Aeternus Ancients" plain (file "~/Documents/org/templates/aeternus_ancient.org")
-      :if-new (file+head "aeternus/ancient_${slug}.org" "#+title: Aeternus: ${title}\n#+date: %U\n#+startup: latexpreview inlineimages\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:ancient:language:\n\n")
+      :if-new (file+head "aeternus/ancient_${slug}.org" "#+title: Aeternus: ${title}\n#+author: %n\n#+date: %U\n#+startup: latexpreview inlineimages\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:ancient:language:\n\n")
       :unarrowed t)
      ("i" "IA" plain "- source ::\n\n%?"
-      :target (file+head "ia/${slug}.org" "#+title: IA: ${title}\n#+filetags: :IA:\n#+author: Rahvax%n\n#+date: %U\n\n")
+      :target (file+head "ia/${slug}.org" "#+title: IA: ${title}\n#+filetags: :IA:\n#+author: %n\n#+date: %U\n\n")
       :unarrowed t)
      ("t" "Technology" plain "- fonts ::\n- source ::\n%?"
-      :target (file+head "tech/${slug}.org" "#+title: Tech: ${title}\n#+filetags: :tech:\n#+author: Rahvax%n\n#+date: %U\n\n")
+      :target (file+head "tech/${slug}.org" "#+title: Tech: ${title}\n#+filetags: :tech:\n#+author: %n\n#+date: %U\n\n")
       :unarrowed t)
      ("r" "Reading Notes" plain "%?"
       :target (file+head "${citar-citekey}.org" "#+title: ${note-title}\n#+created: %U\n")
@@ -217,6 +262,7 @@
 #+end_src
 
 ~Org-roam-UI~
+Isso é uma interface para visualizar suas notas.
 #+begin_src emacs-lisp
 (use-package org-roam-ui
   :ensure t
@@ -228,7 +274,8 @@
   (org-roam-ui-open-on-start t))
 #+end_src
 
-** Projectile
+** ~Projectile~
+Configurações relacionadas ao criar e gerenciar projetos no Emacs.
 #+begin_src emacs-lisp
 (use-package projectile
   :ensure t
@@ -238,7 +285,7 @@
   ("C-c p" . projectile-command-map))
 #+end_src
 
-** Citar
+** ~Citar~
 ~Citar~
 #+begin_src emacs-lisp
 (use-package citar
@@ -305,7 +352,7 @@
   (setq citar-org-roam-capture-template-key "r"))
 #+end_src
 
-** Embark
+** ~Embark~
 #+begin_src emacs-lisp
 ;; Embark
 (use-package embark
@@ -323,7 +370,7 @@
   ("C-h B" . embark-bindings))
 #+end_src
 
-** Company
+** ~Company~
 #+begin_src emacs-lisp
 (use-package company
   :ensure t
@@ -351,13 +398,14 @@
   (company-box-tooltip-limit 50))
 #+end_src
 
-** Dashboard
+** ~Dashboard~
 Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Emacs, apenas sobrescreve uma nova janela.
+Defina seu nome aqui, está como =Rahvax=.
 #+begin_src emacs-lisp
 (use-package dashboard
   :ensure t
   :config
-  (setq dashboard-banner-logo-title "Bem-vindo ao Emacs, zDragonSK!")
+  (setq dashboard-banner-logo-title "Bem-vindo ao Emacs, Rahvax!")
   (setq dashboard-center-content t)
   (setq dashboard-items '((recents   . 5)
                         (projects  . 5)
@@ -379,7 +427,8 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
 (use-package all-the-icons :ensure t)
 #+end_src
 
-** Editorconfig
+** ~Editorconfig~
+Permitir usar os arquivos de =editorconfig= para configurar cada workspace.
 #+begin_src emacs-lisp
 (use-package editorconfig
   :ensure t
@@ -387,7 +436,8 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
   (editorconfig-mode 1))
 #+end_src
 
-** Babel
+** ~Babel~
+Essa parada é insana! Isso aqui permite rodar códigos dentro de notas!
 #+begin_src emacs-lisp
 (require 'ob-C)
 (use-package ob
@@ -404,6 +454,7 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
 #+end_src
 
 ** Doom themes
+Configurações do tema do Emacs, estou usando o Doom.
 #+begin_src emacs-lisp
 (use-package doom-themes
   :ensure t
@@ -426,7 +477,8 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
   :hook (after-init . doom-modeline-mode))
 #+end_src
 
-** Evil-mode
+** ~Evil-mode~
+Isso traz os atalhos e a dinâmica do VIM ao Emacs. Sou usuário de VIM!
 #+begin_src emacs-lisp
 (use-package evil
   :ensure t
@@ -446,7 +498,7 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
   (evil-collection-init))
 #+end_src
 
-** Wich-key
+** ~Wich-key~
 #+begin_src emacs-lisp
 (use-package which-key
   :ensure t
@@ -455,7 +507,7 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
   (which-key-setup-side-window-bottom))
 #+end_src
 
-** Vertico
+** ~Vertico~
 #+begin_src emacs-lisp
 (use-package vertico
   :ensure t
@@ -487,7 +539,9 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil)))
 #+end_src
 
-** Treemacs e dependências
+** ~Treemacs e dependências~
+Treemacs é basicamente o gerenciador de arquivos do Emacs.
+Aqui vai encontrar toda sua configuração, é bem grande.
 #+begin_src emacs-lisp
 (use-package treemacs
   :ensure t
@@ -602,7 +656,9 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
   :config (treemacs-set-scope-type 'Tabs))
 #+end_src
 
-** Vterm
+** ~Vterm~
+Aqui estou usando o VTERM para ter buffers de terminais.
+Porém, como tem =Evil-mode=, você pode usar =:term=.
 #+begin_src emacs-lisp
 (use-package vterm
   :ensure t
@@ -623,7 +679,8 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
 
 
 * Linguagens
-** Treesiter
+** ~Treesiter~
+A configuração da "gramática" das linguagens de programação que eu uso.
 #+begin_src emacs-lisp
 (setq treesit-language-source-alist
       '((rust "https://github.com/tree-sitter/tree-sitter-rust")
@@ -643,47 +700,39 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
 	    (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
 	    (cmake "https://github.com/uyha/tree-sitter-cmake")
 	    (org "https://github.com/milisims/tree-sitter-org")
-	    (solidity "https://github.com/JoranHonig/tree-sitter-solidity")))
+	    ))
 
-(use-package rust-ts-mode
-  :mode "\\.rs\\'"
-  :hook (rust-ts-mode . eglot-ensure)
-  :init
-  (add-to-list 'org-src-lang-modes '("rust" . rust-ts)))
 (use-package python-mode
   :mode "\\.py\\'" :hook (python-ts-mode . eglot-ensure)
   :init
   (add-to-list 'org-src-lang-modes '("python" . python-ts))
   (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)))
 (use-package html-mode :mode "\\.html\\'" :hook (html-mode . eglot-ensure))
+
 (use-package js-ts-mode
   :mode "\\.js\\'"
-  :hook ((js-ts-mode . eglot-ensure)
-)
+  :hook ((js-ts-mode . eglot-ensure))
   :init
   (add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
   (add-to-list 'org-src-lang-modes '("javascript" . js-ts)))
 
 (use-package typescript-ts-mode
   :mode "\\.ts\\'"
-  :hook ((typescript-ts-mode . eglot-ensure)
-)
+  :hook ((typescript-ts-mode . eglot-ensure))
   :init
   (add-to-list 'major-mode-remap-alist '(typescript-mode . typescript-ts-mode))
   (add-to-list 'org-src-lang-modes '("typescript" . typescript-ts)))
 
 (use-package json-ts-mode
   :mode "\\.json\\'"
-  :hook ((json-ts-mode . eglot-ensure)
-)
+  :hook ((json-ts-mode . eglot-ensure))
   :init
   (add-to-list 'major-mode-remap-alist '(json-mode . json-ts-mode))
   (add-to-list 'org-src-lang-modes '("json" . json-ts)))
 
 (use-package tsx-ts-mode
   :mode "\\.tsx\\'"
-  :hook ((tsx-ts-mode . eglot-ensure)
-)
+  :hook ((tsx-ts-mode . eglot-ensure))
   :init
   (add-to-list 'org-src-lang-modes '("tsx" . tsx-ts)))
 
@@ -714,7 +763,7 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
   (add-to-list 'org-src-lang-modes '("cpp" . c++-ts)))
 #+end_src
 
-** Flycheck
+** ~Flycheck~
 #+begin_src emacs-lisp
 (use-package flycheck
   :ensure t
@@ -743,7 +792,7 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
   :hook (eglot-managed-mode . flycheck-eglot-mode))
 #+end_src
 
-** Eglot
+** ~Eglot~
 #+begin_src emacs-lisp
 (use-package eglot
   :ensure t
@@ -768,7 +817,7 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
 	       '((elixir-ts-mode heex-ts-mode) . ("elixir-ls"))))
 #+end_src
 
-** LSP
+** ~LSP~
 #+begin_src emacs-lisp
 (use-package markdown-mode
   :hook (markdown-mode . lsp)
