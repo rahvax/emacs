@@ -14,6 +14,7 @@ Após instalar o Emacs, utilize `C-x C-f` e digite o diretório de onde foi baix
 * `~/Documents/org/tasks.org`
 * `~/.emacs.d/file.bib`
 * `~/Documents/org/csl/`
+
 Então descomente a linha *62*, *65* e *66*. São as linhas comentadas dentro do bloco **MELPA**. 
 
 Faça então:
