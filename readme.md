@@ -27,7 +27,7 @@ Faça então:
 
 Baixe os LSP para as linguagens que deseja [aqui](https://github.com/joaotavora/eglot?tab=readme-ov-file#connecting-to-a-server), e pronto! Após isso, utilize o comando `C-c C-v t` para aplicar as configurações ao arquivo `init.el`. Feche o Emacs, e abra novamente.
 
+### Observação: PDFs
+A instalação do PDF é necessário dar o comando `M-x pdf-tools-install`; caso esteja usando doas, utilize primeiro a instalação manual com `doas pacman -S --needed base-devel libpng zlib poppler-glib`.
 ### Elcord
 Caso queira o **Elcord-mode**, eu fiz uma atualização do **Elcord** para o `ts-mode` em [Elcord-ts](https://github.com/rahvax/elcord-ts)
-
-## English (Coming Soon)
