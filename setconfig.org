@@ -3,16 +3,44 @@
 
 + Para exportar utilize ~C-c C-v t~
 
+* Index OF
+- [[Configurações básicas]]
+  - [[Custom.el]]
+  - [[Backup e cache]]
+  - [[Configurações do editor]]
+  - [[Binds do Emacs]]
+  - [[MELPA]]
+- [[Configurações de pacotes]]
+  - [[Orderless]]
+  - [[PDF-Tools]]
+  - [[Org]]
+  - [[Projectile]]
+  - [[Citar]]
+  - [[Embark]]
+  - [[Company]]
+  - [[Dashboard]]
+  - [[Editorconfig]]
+  - [[Doom themes]]
+  - [[Evil-mode]]
+  - [[Wich-key]]
+  - [[Vertico]]
+  - [[Treemacs]]
+  - [[VTerm]]
+- [[Linguagens]]
+  - [[Treesiter]]
+  - [[Flycheck]]
+  - [[Eglot]]
+  - [[LSP]]
+    
 * Configurações básicas
 São configurações básicas do editor em si. Aqui é onde defino configurações que representem o editor e suas funções nativas.
-
-~Custom.el~
+** Custom.el
 #+begin_src emacs-lisp
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory)) 
 (ignore-errors (load custom-file))
 #+end_src
 
-~Backup e cache~
+** Backup e cache
 #+begin_src emacs-lisp
 (defvar user-cache-directory (expand-file-name ".cache" user-emacs-directory))
 (defvar user-backup-directory (expand-file-name "backup" user-emacs-directory))
@@ -27,7 +55,7 @@ São configurações básicas do editor em si. Aqui é onde defino configuraçõ
       tramp-auto-save-directory user-autosave-directory)
 #+end_src
 
-~Configurações do editor~
+** Configurações do editor
 #+begin_src emacs-lisp
 (prefer-coding-system 'utf-8-unix)
 (set-language-environment "UTF-8")
@@ -41,7 +69,7 @@ São configurações básicas do editor em si. Aqui é onde defino configuraçõ
   (electric-pair-mode t))
 #+end_src
 
-~Binds do Emacs~
+** Binds do Emacs
 O atalho colocado aqui é o de =C-x c= para abrir a configuração do Emacs (esse arquivo).
 Para funcionar é necessário que o arquivo esteja em =/Documents/org/roam/= com o nome de =emacs_config.org=.
 #+begin_src emacs-lisp
@@ -54,7 +82,7 @@ Para funcionar é necessário que o arquivo esteja em =/Documents/org/roam/= com
   :bind ("C-x c" . open-init-file-config))
 #+end_src
 
-~MELPA~
+** MELPA
 Essa configuração é para definir o mirror do =MELPA=.
 Há algumas coisas comentadas nesse bloco, e isso é proposital:
 Na primeira instalação é necessário descomentar, mas após, só vai tornar o Emacs lento.
@@ -66,10 +94,9 @@ Na primeira instalação é necessário descomentar, mas após, só vai tornar o
 ;;(package-refresh-contents)
 #+end_src
 
-* Configurações pacotes
+* Configurações de pacotes
 Aqui vai encontrar configurações de pacotes nativos ou instalados.
-
-** ~Orderless~
+** Orderless
 É um autocomplete para o =M-x=, ajuda a ficar mais fácil de pesquisar funções e comandos do Emacs.
 #+begin_src emacs-lisp
 (use-package orderless
@@ -85,10 +112,11 @@ Aqui vai encontrar configurações de pacotes nativos ou instalados.
   (setq orderless-component-separator "[ &]"))
 #+end_src
 
-~Configuração PDF-Tools~
+** PDF-Tools
 Necessário para visualizar PDFs pelo Emacs.
 #+begin_src emacs-lisp
 (use-package pdf-tools
+  :ensure t
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :magic ("%PDF" . pdf-view-mode)
   :config
@@ -100,7 +128,7 @@ Necessário para visualizar PDFs pelo Emacs.
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 #+end_src
 
-** =Orgs=
+** Org
 ~Org-modern~
 Apenas um visual mais bonito para arquivos Org-mode. Essa função ativa ele sempre.
 #+begin_src emacs-lisp
@@ -124,6 +152,7 @@ Aqui foi definido o arquivo de tarefas, =tasks.org=.
 Configurações para os arquivos de Org-mode.
 Aqui é definido os atalhos, capturas e outros.
 #+begin_src emacs-lisp
+(use-package org-habit)
 (use-package org
   :ensure t
   :custom
@@ -134,7 +163,8 @@ Aqui é definido os atalhos, capturas e outros.
 		       (sequence "TOREAD(r)" "|" "READ(R!)")
 		       (sequence "TOLEARN(l)" "|" "LEARNED(L!)")))
   (org-hide-emphasis-markers t)
-
+  (add-to-list 'org-modules 'org-habit t)
+  (org-habit-show-habits t)
  ;; indentation
   (org-startup-truncated t)
   (org-startup-indented t)
@@ -156,6 +186,8 @@ Aqui é definido os atalhos, capturas e outros.
        "* TODO %? :projc: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
       ("pg" "General" entry (file+olp "~/Documents/org/tasks.org" "General")
        "* TODO %? :gener: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("pr" "Rotina" entry (file+olp "~/Documents/org/tasks.org" "Rotina")
+       "* TODO %? :rotina: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
       
       ("f" "Finance")
       ("fp" "Pay" entry (file+olp "~/Documents/org/tasks.org" "Pay")
@@ -191,11 +223,8 @@ Aqui é definido os atalhos, capturas e outros.
   ("C-c c" . org-capture))
 #+end_src
 
-** ~Org-roam~
+~Org-roam~
 Aqui será definido os blocos do Org-roam, uma biblioteca de notas.
-
-~Roam~
-Aqui é definido o diretório do Roam, templates, atalhos e outros.
 #+begin_src emacs-lisp
 (use-package org-roam
   :ensure t
@@ -274,7 +303,7 @@ Isso é uma interface para visualizar suas notas.
   (org-roam-ui-open-on-start t))
 #+end_src
 
-** ~Projectile~
+** Projectile
 Configurações relacionadas ao criar e gerenciar projetos no Emacs.
 #+begin_src emacs-lisp
 (use-package projectile
@@ -285,7 +314,7 @@ Configurações relacionadas ao criar e gerenciar projetos no Emacs.
   ("C-c p" . projectile-command-map))
 #+end_src
 
-** ~Citar~
+** Citar
 ~Citar~
 #+begin_src emacs-lisp
 (use-package citar
@@ -352,7 +381,7 @@ Configurações relacionadas ao criar e gerenciar projetos no Emacs.
   (setq citar-org-roam-capture-template-key "r"))
 #+end_src
 
-** ~Embark~
+** Embark
 #+begin_src emacs-lisp
 ;; Embark
 (use-package embark
@@ -370,7 +399,7 @@ Configurações relacionadas ao criar e gerenciar projetos no Emacs.
   ("C-h B" . embark-bindings))
 #+end_src
 
-** ~Company~
+** Company
 #+begin_src emacs-lisp
 (use-package company
   :ensure t
@@ -398,7 +427,7 @@ Configurações relacionadas ao criar e gerenciar projetos no Emacs.
   (company-box-tooltip-limit 50))
 #+end_src
 
-** ~Dashboard~
+** Dashboard
 Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Emacs, apenas sobrescreve uma nova janela.
 Defina seu nome aqui, está como =Rahvax=.
 #+begin_src emacs-lisp
@@ -406,6 +435,7 @@ Defina seu nome aqui, está como =Rahvax=.
   :ensure t
   :config
   (setq dashboard-banner-logo-title "Bem-vindo ao Emacs, Rahvax!")
+  (setq dashboard-startup-banner 'logo)
   (setq dashboard-center-content t)
   (setq dashboard-items '((recents   . 5)
                         (projects  . 5)
@@ -419,6 +449,7 @@ Defina seu nome aqui, está como =Rahvax=.
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
   (setq dashboard-projects-switch-function 'projectile-switch-project)
+  (setq dashboard-projects-backend 'projectile)
   (dashboard-setup-startup-hook)
 )
 
@@ -427,7 +458,7 @@ Defina seu nome aqui, está como =Rahvax=.
 (use-package all-the-icons :ensure t)
 #+end_src
 
-** ~Editorconfig~
+** Editorconfig
 Permitir usar os arquivos de =editorconfig= para configurar cada workspace.
 #+begin_src emacs-lisp
 (use-package editorconfig
@@ -436,7 +467,7 @@ Permitir usar os arquivos de =editorconfig= para configurar cada workspace.
   (editorconfig-mode 1))
 #+end_src
 
-** ~Babel~
+** Babel
 Essa parada é insana! Isso aqui permite rodar códigos dentro de notas!
 #+begin_src emacs-lisp
 (require 'ob-C)
@@ -477,7 +508,7 @@ Configurações do tema do Emacs, estou usando o Doom.
   :hook (after-init . doom-modeline-mode))
 #+end_src
 
-** ~Evil-mode~
+** Evil-mode
 Isso traz os atalhos e a dinâmica do VIM ao Emacs. Sou usuário de VIM!
 #+begin_src emacs-lisp
 (use-package evil
@@ -498,7 +529,7 @@ Isso traz os atalhos e a dinâmica do VIM ao Emacs. Sou usuário de VIM!
   (evil-collection-init))
 #+end_src
 
-** ~Wich-key~
+** Wich-key
 #+begin_src emacs-lisp
 (use-package which-key
   :ensure t
@@ -507,7 +538,7 @@ Isso traz os atalhos e a dinâmica do VIM ao Emacs. Sou usuário de VIM!
   (which-key-setup-side-window-bottom))
 #+end_src
 
-** ~Vertico~
+** Vertico
 #+begin_src emacs-lisp
 (use-package vertico
   :ensure t
@@ -539,11 +570,12 @@ Isso traz os atalhos e a dinâmica do VIM ao Emacs. Sou usuário de VIM!
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil)))
 #+end_src
 
-** ~Treemacs e dependências~
+** Treemacs
 Treemacs é basicamente o gerenciador de arquivos do Emacs.
 Aqui vai encontrar toda sua configuração, é bem grande.
 #+begin_src emacs-lisp
 (use-package treemacs
+  :hook (after-init . treemacs-project-follow-mode)
   :ensure t
   :defer t
   :init
@@ -656,7 +688,7 @@ Aqui vai encontrar toda sua configuração, é bem grande.
   :config (treemacs-set-scope-type 'Tabs))
 #+end_src
 
-** ~Vterm~
+** Vterm
 Aqui estou usando o VTERM para ter buffers de terminais.
 Porém, como tem =Evil-mode=, você pode usar =:term=.
 #+begin_src emacs-lisp
@@ -677,9 +709,8 @@ Porém, como tem =Evil-mode=, você pode usar =:term=.
 	 ("C-c C-t" . run-vterm-other-window-custom)))
 #+end_src
 
-
 * Linguagens
-** ~Treesiter~
+** Treesiter
 A configuração da "gramática" das linguagens de programação que eu uso.
 #+begin_src emacs-lisp
 (setq treesit-language-source-alist
@@ -763,7 +794,7 @@ A configuração da "gramática" das linguagens de programação que eu uso.
   (add-to-list 'org-src-lang-modes '("cpp" . c++-ts)))
 #+end_src
 
-** ~Flycheck~
+** Flycheck
 #+begin_src emacs-lisp
 (use-package flycheck
   :ensure t
@@ -792,7 +823,7 @@ A configuração da "gramática" das linguagens de programação que eu uso.
   :hook (eglot-managed-mode . flycheck-eglot-mode))
 #+end_src
 
-** ~Eglot~
+** Eglot
 #+begin_src emacs-lisp
 (use-package eglot
   :ensure t
@@ -817,7 +848,7 @@ A configuração da "gramática" das linguagens de programação que eu uso.
 	       '((elixir-ts-mode heex-ts-mode) . ("elixir-ls"))))
 #+end_src
 
-** ~LSP~
+** LSP
 #+begin_src emacs-lisp
 (use-package markdown-mode
   :hook (markdown-mode . lsp)
