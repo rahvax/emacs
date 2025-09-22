@@ -20,6 +20,7 @@
   - [[Company]]
   - [[Dashboard]]
   - [[Editorconfig]]
+  - [[Babel]]
   - [[Doom themes]]
   - [[Evil-mode]]
   - [[Wich-key]]
@@ -96,6 +97,42 @@ Na primeira instalação é necessário descomentar, mas após, só vai tornar o
 
 * Configurações de pacotes
 Aqui vai encontrar configurações de pacotes nativos ou instalados.
+** Latex
+#+BEGIN_SRC emacs-lisp
+(use-package auctex
+  :ensure t
+  :hook (LaTeX-mode . eglot-ensure)
+  :preface
+                    ; https://gist.github.com/karthink/7d89df35ee9b7ac0c93d0177b862dadb
+  (defun latex-math-from-calc ()
+    "Evaluate `calc' on the contents of line at point."
+    (interactive)
+    (cond ((region-active-p)
+       (let* ((beg (region-beginning))
+          (end (region-end))
+          (string (buffer-substring-no-properties beg end)))
+         (kill-region beg end)
+         (insert (calc-eval `(,string calc-language latex
+                      calc-prefer-frac t
+                      calc-angle-mode rad)))))
+      (t (let ((l (thing-at-point 'line)))
+           (end-of-line 1) (kill-line 0)
+           (insert (calc-eval `(,l
+                    calc-language latex
+                    calc-prefer-frac t
+                    calc-angle-mode rad)))))))
+  :config
+  (setq TeX-view-program-selection '((output-pdf "PDF Tools")))
+  (setq TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view)))
+  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+  :bind (:map LaTeX-mode-map
+          ("C-x l l" . latex-math-from-calc)))
+
+(use-package cdlatex
+  :ensure t
+  :hook ((LaTeX-mode . turn-on-cdlatex)
+     (org-mode . org-cdlatex-mode)))
+#+END_SRC
 ** Orderless
 É um autocomplete para o =M-x=, ajuda a ficar mais fácil de pesquisar funções e comandos do Emacs.
 #+begin_src emacs-lisp
@@ -165,6 +202,7 @@ Aqui é definido os atalhos, capturas e outros.
   (org-hide-emphasis-markers t)
   (add-to-list 'org-modules 'org-habit t)
   (org-habit-show-habits t)
+  (org-format-latex-options (plist-put org-format-latex-options :scale 2.0)) ;; scala do latex
  ;; indentation
   (org-startup-truncated t)
   (org-startup-indented t)
@@ -471,17 +509,19 @@ Permitir usar os arquivos de =editorconfig= para configurar cada workspace.
 Essa parada é insana! Isso aqui permite rodar códigos dentro de notas!
 #+begin_src emacs-lisp
 (require 'ob-C)
+(require 'ob-python)
 (use-package ob
   :custom
   (org-confirm-babel-evaluate nil)
   (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
 							   (rust . t)
 							   (C . t)
+							   (python . t)
 							   (mermaid . t))))
 (use-package ob-rust
   :ensure t)
-(use-package ob-async
-  :ensure t)
+;;(use-package ob-async
+;;  :ensure t)
 #+end_src
 
 ** Doom themes
