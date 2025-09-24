@@ -11,6 +11,7 @@
   - [[Binds do Emacs]]
   - [[MELPA]]
 - [[Configurações de pacotes]]
+  - [[Latex]]
   - [[Orderless]]
   - [[PDF-Tools]]
   - [[Org]]
@@ -250,7 +251,7 @@ Aqui é definido os atalhos, capturas e outros.
        "* TODO %? :chalg: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
       ("aq" "Question" entry (file+olp "~/Documents/org/tasks.org" "Question")
        "* TODO %? :quest: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ac" "Code" entry (file+olp "~/Documents/org/tasks.org" "Code")
+      ("ad" "Code" entry (file+olp "~/Documents/org/tasks.org" "Code")
        "* TODO %? :code: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
       ("ag" "General" entry (file+olp "~/Documents/org/tasks.org" "General")
        "* TODO %? :gener: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
@@ -606,8 +607,8 @@ Isso traz os atalhos e a dinâmica do VIM ao Emacs. Sou usuário de VIM!
   :after (vertico)
   :init
   (marginalia-mode)
-  :custom
-  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil)))
+  :config
+  (add-to-list 'marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil)))
 #+end_src
 
 ** Treemacs
