@@ -10,6 +10,7 @@
   - [[Configurações do editor]]
   - [[Binds do Emacs]]
   - [[MELPA]]
+  - [[Minhas Funções]]
 - [[Configurações de pacotes]]
   - [[Latex]]
   - [[Orderless]]
@@ -103,6 +104,20 @@ Na primeira instalação é necessário descomentar, mas após, só vai tornar o
 ;;(package-refresh-contents)
 #+end_src
 
+** Minhas Funções
+~Criar arquivo Latex~
+#+BEGIN_SRC emacs-lisp
+(use-package emacs
+  :preface
+  (defun open-new-latex-file ()
+    (interactive)
+    (let* ((directory-name "~/Documents/org/roam/latex/")
+	   (file-name (read-from-minibuffer "Filename: ")))
+      (with-temp-file (format "%s/%s.tex" directory-name file-name))
+      (find-file (format "%s/%s.tex" directory-name file-name))
+    ))
+  :bind ("C-c x" . open-new-latex-file))
+#+END_SRC
 * Configurações de pacotes
 Aqui vai encontrar configurações de pacotes nativos ou instalados.
 ** Latex
