@@ -333,9 +333,6 @@ Aqui será definido os blocos do Org-roam, uma biblioteca de notas.
       :target (file+head "english/${slug}.org" "#+title: Inglês: ${title}\n#+filetags: :inglês:\n#+author: %n\n#+date: %U\n\n")
       :unarrowed t)
 
-     ("x" "Latex" plain "%?"
-      :target (file+head "latex/${slug}.tex" "")
-      :unarrowed t)
      ("g" "General" plain "%?"
       :target (file+head "${slug}.org" "#+title: ${note-title}\n#+created: %U\n")
       :unarrowed t)
