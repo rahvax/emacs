@@ -72,16 +72,23 @@ São configurações básicas do editor em si. Aqui é onde defino configuraçõ
 #+end_src
 
 ** Binds do Emacs
-O atalho colocado aqui é o de =C-x c= para abrir a configuração do Emacs (esse arquivo).
-Para funcionar é necessário que o arquivo esteja em =/Documents/org/roam/= com o nome de =emacs_config.org=.
+Aqui é colocado os atalhos personalizados do Emacs.
+1. abrir este arquivo com ~C-x c~
+2. abrir configuração do i3wm com ~C-i c~
 #+begin_src emacs-lisp
 (use-package emacs
   :config
   (defun open-init-file-config ()
-    "Open the init.el Emacs configuration file."
     (interactive)
     (find-file "~/Documents/org/roam/emacs_config.org"))
   :bind ("C-x c" . open-init-file-config))
+
+(use-package emacs
+  :config
+  (defun open-i3-file-config ()
+    (interactive)
+    (find-file "~/.config/i3/config"))
+  :bind ("C-c i" . open-i3-file-config))
 #+end_src
 
 ** MELPA
@@ -100,13 +107,13 @@ Na primeira instalação é necessário descomentar, mas após, só vai tornar o
 Aqui vai encontrar configurações de pacotes nativos ou instalados.
 ** Latex
 #+BEGIN_SRC emacs-lisp
+(use-package tex :ensure auctex)
+(use-package latex :ensure auctex)
 (use-package auctex
   :ensure t
   :hook (LaTeX-mode . eglot-ensure)
   :preface
-                    ; https://gist.github.com/karthink/7d89df35ee9b7ac0c93d0177b862dadb
   (defun latex-math-from-calc ()
-    "Evaluate `calc' on the contents of line at point."
     (interactive)
     (cond ((region-active-p)
        (let* ((beg (region-beginning))
@@ -216,44 +223,44 @@ Aqui é definido os atalhos, capturas e outros.
   (org-log-into-drawer t)
 ;;; Templates
   (org-capture-templates
-   '(("p" "Personal")
-      ("ph" "Home" entry (file+olp "~/Documents/org/tasks.org" "Home")
+   '(("p" "Pessoal")
+      ("pc" "Casa" entry (file+olp "~/Documents/org/tasks.org" "Home")
        "* TODO %? :home: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("pl" "Health" entry (file+olp "~/Documents/org/tasks.org" "Health")
+      ("ps" "Saúde" entry (file+olp "~/Documents/org/tasks.org" "Health")
        "* TODO %? :helt: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("pp" "Project" entry (file+olp "~/Documents/org/tasks.org" "Project")
+      ("pp" "Projetos" entry (file+olp "~/Documents/org/tasks.org" "Project")
        "* TODO %? :projc: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("pg" "General" entry (file+olp "~/Documents/org/tasks.org" "General")
+      ("pg" "Geral" entry (file+olp "~/Documents/org/tasks.org" "General")
        "* TODO %? :gener: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
       ("pr" "Rotina" entry (file+olp "~/Documents/org/tasks.org" "Rotina")
        "* TODO %? :rotina: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
       
-      ("f" "Finance")
-      ("fp" "Pay" entry (file+olp "~/Documents/org/tasks.org" "Pay")
+      ("f" "Financeiro")
+      ("fp" "Pagar" entry (file+olp "~/Documents/org/tasks.org" "Pay")
        "* TODO %? :pay: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("fw" "Work" entry (file+olp "~/Documents/org/tasks.org" "Work")
+      ("ft" "Trabalho" entry (file+olp "~/Documents/org/tasks.org" "Work")
        "* TODO %? :work: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("fi" "Investment" entry (file+olp "~/Documents/org/tasks.org" "Investment")
+      ("fi" "Investimento" entry (file+olp "~/Documents/org/tasks.org" "Investment")
        "* TODO %? :invmt: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("fb" "Bill" entry (file+olp "~/Documents/org/tasks.org" "Bill")
+      ("fc" "Contas" entry (file+olp "~/Documents/org/tasks.org" "Bill")
        "* TODO %? :bill: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
 
-      ("l" "Learn")
-      ("lr" "Read" entry (file+olp "~/Documents/org/tasks.org" "Read")
-       "* TODO %? :read: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ls" "Research" entry (file+olp "~/Documents/org/tasks.org" "Research")
+      ("a" "Aprender")
+      ("al" "Leitura" entry (file+olp "~/Documents/org/tasks.org" "Read")
+       "* TOREAD %? :read: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("lp" "Pesquisa" entry (file+olp "~/Documents/org/tasks.org" "Research")
        "* TODO %? :resch: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("lw" "Write" entry (file+olp "~/Documents/org/tasks.org" "Write")
+      ("le" "Escrever" entry (file+olp "~/Documents/org/tasks.org" "Write")
        "* TODO %? :write: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
 
       ("a" "Aeternus")
-      ("ac" "Challenger" entry (file+olp "~/Documents/org/tasks.org" "Research")
+      ("ad" "Desafio" entry (file+olp "~/Documents/org/tasks.org" "Research")
        "* TODO %? :chalg: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("aq" "Question" entry (file+olp "~/Documents/org/tasks.org" "Question")
+      ("aq" "Questão" entry (file+olp "~/Documents/org/tasks.org" "Question")
        "* TODO %? :quest: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ad" "Code" entry (file+olp "~/Documents/org/tasks.org" "Code")
+      ("ac" "Code" entry (file+olp "~/Documents/org/tasks.org" "Code")
        "* TODO %? :code: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ag" "General" entry (file+olp "~/Documents/org/tasks.org" "General")
+      ("ag" "Geral" entry (file+olp "~/Documents/org/tasks.org" "General")
        "* TODO %? :gener: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
       ))
   :bind ;; atalhos
@@ -277,31 +284,62 @@ Aqui será definido os blocos do Org-roam, uma biblioteca de notas.
   (require 'org-roam-protocol)
   ;;org-roam templates
   (setq org-roam-capture-templates
-   '(("g" "General" plain "#+filetags: :%?:"
-      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
-      :unnarrowed t)
-     ("d" "Documentations" plain "- source ::\n- fonts: \n\n* Index Of\n %?"
-      :if-new (file+head "${slug}.org" "#+title: ${title}\n#+date: %U\n")
+   '(("a" "Aeternus")
+     ("ag" "Geral" plain (file "~/Documents/org/templates/aeternus_default.org")
+      :if-new (file+head "aeternus/aet_${slug}.org" "#+title: Aeternus: ${title}\n#+author: %n\n#+date: %U\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:\n\n")
       :unarrowed t)
-     ("a" "Aeternus Notes" plain (file "~/Documents/org/templates/aeternus_default.org")
-      :if-new (file+head "aeternus/notes_${slug}.org" "#+title: Aeternus: ${title}\n#+author: %n\n#+date: %U\n#+startup: latexpreview inlineimages\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:\n\n")
+     ("am" "Aeternus Manuscritos" plain (file "~/Documents/org/templates/aeternus_ancient.org")
+      :if-new (file+head "aeternus/anc_${slug}.org" "#+title: Aeternus: ${title}\n#+author: %n\n#+date: %U\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:ancient:language:\n\n")
       :unarrowed t)
-     ("k" "Akkadian Notes" plain "- source ::\n- fonts: \n%?"
-      :target (file+head "akkadian/${slug}.org" "#+title: Akkadian: ${title}\n#+author: %n\n#+filetags: :akkadian:\n#+author: Rahvax%n\n#+date: %U\n\n")
+     
+     ("t" "Tecnologia")
+     ("ti" "IA" plain "%?"
+      :target (file+head "tech/ia/${slug}.org" "#+title: IA: ${title}\n#+filetags: :IA:tech:\n#+author: %n\n#+date: %U\n\n")
       :unarrowed t)
-     ("s" "Sumerian Notes" plain "- source ::\n- fonts: \n%?"
-      :target (file+head "sumerian/${slug}.org" "#+title: Sumerian: ${title}\n#+author: %n\n#+filetags: :sumerian:\n#+author: Rahvax%n\n#+date: %U\n\n")
-      :unarrowed t)
-     ("c" "Aeternus Ancients" plain (file "~/Documents/org/templates/aeternus_ancient.org")
-      :if-new (file+head "aeternus/ancient_${slug}.org" "#+title: Aeternus: ${title}\n#+author: %n\n#+date: %U\n#+startup: latexpreview inlineimages\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:ancient:language:\n\n")
-      :unarrowed t)
-     ("i" "IA" plain "- source ::\n\n%?"
-      :target (file+head "ia/${slug}.org" "#+title: IA: ${title}\n#+filetags: :IA:\n#+author: %n\n#+date: %U\n\n")
-      :unarrowed t)
-     ("t" "Technology" plain "- fonts ::\n- source ::\n%?"
+     ("tg" "General" plain "%?"
       :target (file+head "tech/${slug}.org" "#+title: Tech: ${title}\n#+filetags: :tech:\n#+author: %n\n#+date: %U\n\n")
       :unarrowed t)
-     ("r" "Reading Notes" plain "%?"
+     ("tc" "Code" plain "%?"
+      :target (file+head "tech/code/${slug}.org" "#+title: Code: ${title}\n#+filetags: :tech:code:programação:\n#+author: %n\n#+date: %U\n\n")
+      :unarrowed t)
+
+     ("c" "Ciência")
+     ("cg" "Geral" plain (file "~/Documents/org/templates/science.org")
+      :target (file+head "science/${slug}.org" "#+title: Science: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :ciencia:\n#+author: %n\n#+date: %U\n\n")
+      :unarrowed t)
+     ("cf" "Física" plain (file "~/Documents/org/templates/science.org")
+      :target (file+head "science/physics/${slug}.org" "#+title: Física: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :ciencia:física:\n#+author: %n\n#+date: %U\n\n")
+      :unarrowed t)
+     ("ca" "Astrofísica" plain (file "~/Documents/org/templates/science.org")
+      :target (file+head "science/astro/${slug}.org" "#+title: Astro: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :ciencia:astrofísica:física:\n#+author: %n\n#+date: %U\n\n")
+      :unarrowed t)
+
+     ("m" "Matemática")
+     ("mg" "Geral" plain (file "~/Documents/org/templates/math.org")
+      :target (file+head "math/${slug}.org" "#+title: Matematica: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :matematica:\n#+author: %n\n#+date: %U\n\n")
+      :unarrowed t)
+     ("ma" "Algebras" plain (file "~/Documents/org/templates/math.org")
+      :target (file+head "math/${slug}.org" "#+title: Matematica: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :matematica:algebra:\n#+author: %n\n#+date: %U\n\n")
+      :unarrowed t)
+     ("me" "Equação" plain (file "~/Documents/org/templates/math.org")
+      :target (file+head "math/${slug}.org" "#+title: Matematica: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :matematica:equação:\n#+author: %n\n#+date: %U\n\n")
+      :unarrowed t)
+
+     ("i" "Idioma")
+     ("is" "Sumério" plain (file "~/Documents/org/templates/language.org")
+      :target (file+head "sumerian/${slug}.org" "#+title: Sumério: ${title}\n#+filetags: :sumerian:sumério:\n#+author: %n\n#+date: %U\n\n")
+      :unarrowed t)
+     ("ii" "Inglês" plain (file "~/Documents/org/templates/language.org")
+      :target (file+head "english/${slug}.org" "#+title: Inglês: ${title}\n#+filetags: :inglês:\n#+author: %n\n#+date: %U\n\n")
+      :unarrowed t)
+
+     ("x" "Latex" plain "%?"
+      :target (file+head "latex/${slug}.tex" "")
+      :unarrowed t)
+     ("g" "General" plain "%?"
+      :target (file+head "${slug}.org" "#+title: ${note-title}\n#+created: %U\n")
+      :unarrowed t)
+     ("l" "Leitura" plain "%?"
       :target (file+head "${citar-citekey}.org" "#+title: ${note-title}\n#+created: %U\n")
       :unarrowed t)))
   :bind
