@@ -89,7 +89,14 @@ Aqui é colocado os atalhos personalizados do Emacs.
   (defun open-i3-file-config ()
     (interactive)
     (find-file "~/.config/i3/config"))
-  :bind ("C-c i" . open-i3-file-config))
+  :bind ("C-c i i" . open-i3-file-config))
+
+(use-package emacs
+  :config
+  (defun open-compose-file-config ()
+    (interactive)
+    (find-file "~/Documents/org/compose.org"))
+  :bind ("C-c i c" . open-compose-file-config))
 #+end_src
 
 ** MELPA
