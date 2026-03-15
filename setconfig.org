@@ -81,7 +81,7 @@ Aqui é colocado os atalhos personalizados do Emacs.
   :config
   (defun open-init-file-config ()
     (interactive)
-    (find-file "~/Documents/org/roam/emacs_config.org"))
+    (find-file "~/Documents/org/emacs_config.org"))
   :bind ("C-x c" . open-init-file-config))
 
 (use-package emacs
@@ -544,7 +544,7 @@ Defina seu nome aqui, está como =Rahvax=.
                                   (projects . "file-directory") (agenda . "database")))
   (setq dashboard-set-heading-icons t)
   (setq dashboard-set-file-icons t)
-  (setq dashboard-projects-switch-function 'projectile-switch-project)
+  (setq dashboard-projects-switch-function 'projectile-switch-project-by-name)
   (setq dashboard-projects-backend 'projectile)
   (dashboard-setup-startup-hook)
 )
@@ -944,6 +944,7 @@ A configuração da "gramática" das linguagens de programação que eu uso.
 	           '(solidity-mode . ("vscode-solidity-server" "--stdio")))
   (add-to-list 'eglot-server-programs
 	       '((elixir-ts-mode heex-ts-mode) . ("elixir-ls"))))
+  (add-to-list 'eglot-server-programs '((python-ts-mode python-mode) . ("pyright-langserver" "--stdio")))
 #+end_src
 
 ** LSP
