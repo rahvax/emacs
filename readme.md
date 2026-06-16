@@ -1,4 +1,4 @@
-# Emacs Init
+# Emacs - Configuração
 ## Português (Brasil)
 No Emacs usamos sequências de teclas descritas por `C-` e `M-` que são para:
 * `C-` - _Ctrl +_
