@@ -41,6 +41,7 @@ São configurações básicas do editor em si. Aqui é onde defino configuraçõ
 #+begin_src emacs-lisp
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory)) 
 (ignore-errors (load custom-file))
+(load-file (expand-file-name "ambiente.el" user-emacs-directory))
 #+end_src
 
 ** Backup e cache
@@ -82,7 +83,7 @@ Aqui é colocado os atalhos personalizados do Emacs.
   :config
   (defun open-init-file-config ()
     (interactive)
-    (find-file "~/Documents/org/emacs_config.org"))
+    (find-file ambiente/emacs-config))
   :bind ("C-x c" . open-init-file-config))
 
 (use-package emacs
@@ -129,8 +130,8 @@ Na primeira instalação é necessário descomentar, mas após, só vai tornar o
 
 ** Configurações do IRC
 #+BEGIN_SRC emacs-lisp
-(setq erc-server "IP-IRC")
-(setq erc-port 6669)
+(setq erc-server ambiente/irc-ip)
+(setq erc-port ambiente/irc-porta)
 #+END_SRC
 
 * Configurações de pacotes
@@ -536,12 +537,12 @@ Configurações relacionadas ao criar e gerenciar projetos no Emacs.
 
 ** Dashboard
 Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Emacs, apenas sobrescreve uma nova janela.
-Defina seu nome aqui.
+Defina seu nome aqui, está como =Rahvax=.
 #+begin_src emacs-lisp
 (use-package dashboard
   :ensure t
   :config
-  (setq dashboard-banner-logo-title "Bem-vindo ao Emacs, USUARIO!")
+  (setq dashboard-banner-logo-title "Bem-vindo ao Emacs, " + ambiente/emacs-usuario)
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-center-content t)
   (setq dashboard-items '((projects  . 4)

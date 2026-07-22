@@ -30,9 +30,10 @@ Baixe os LSP para as linguagens que deseja [aqui](https://github.com/joaotavora/
 Crie um arquivo `.emacs.d/ambiente.el` (nomes opcionais) e defina as seguintes variáveis:
 ```lisp
 ;;; Só remover o que não quiser usar
-(setq ambiente/irc-server "IP_DO_SERVIDOR")
-(setq ambiente/irc-port 6669)
+(setq ambiente/irc-ip "IP_DO_SERVIDOR")
+(setq ambiente/irc-porta 6669)
 (setq ambiente/emacs-usuario "Rahvax")
+(setq ambiente/emacs-config "~/Documents/Forgejo/emacs/setconfig.org")
 ```
 ## Observação: PDFs
 A instalação do PDF é necessário dar o comando `M-x pdf-tools-install`; caso esteja usando doas, utilize primeiro a instalação manual com `doas pacman -S --needed base-devel libpng zlib poppler-glib`.
