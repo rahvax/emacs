@@ -1,5 +1,4 @@
 # Emacs - Configuração
-## Português (Brasil)
 No Emacs usamos sequências de teclas descritas por `C-` e `M-` que são para:
 * `C-` - _Ctrl +_
 * `M-` - _Alt +_ 
@@ -9,7 +8,7 @@ No Emacs usamos sequências de teclas descritas por `C-` e `M-` que são para:
 
 Então o comando `C-x C-c`, para sair do Emacs, é `Ctrl + x` e depois `Ctrl + c`.
 
-### Aplicando configuração
+## Aplicando configuração
 Após instalar o Emacs, utilize `C-x C-f` e digite o diretório de onde foi baixado o arquivo `setconfig.org`, dentro do clone desse repositório. Procure no arquivo pelas configurações de diretórios e arquivos, caso queira modificar. Se não, apenas crie-os:
 * `~/Documents/org/roam`
 * `~/Documents/org/tasks.org`
@@ -27,9 +26,16 @@ Faça então:
 * Baixe as fontes com os comandos `M-x nerd-icons-install-fonts RET` e `M-x all-the-icons-install-fonts`
 
 Baixe os LSP para as linguagens que deseja [aqui](https://github.com/joaotavora/eglot?tab=readme-ov-file#connecting-to-a-server), e pronto! Após isso, utilize o comando `C-c C-v t` para aplicar as configurações ao arquivo `init.el`. Feche o Emacs, e abra novamente.
-
-### Observação: PDFs
+### Variáveis privadas
+Crie um arquivo `.emacs.d/ambiente.el` (nomes opcionais) e defina as seguintes variáveis:
+```lisp
+;;; Só remover o que não quiser usar
+(setq ambiente/irc-server "IP_DO_SERVIDOR")
+(setq ambiente/irc-port 6669)
+(setq ambiente/emacs-usuario "Rahvax")
+```
+## Observação: PDFs
 A instalação do PDF é necessário dar o comando `M-x pdf-tools-install`; caso esteja usando doas, utilize primeiro a instalação manual com `doas pacman -S --needed base-devel libpng zlib poppler-glib`.
-### Elcord
+## Elcord
 Caso queira o **Elcord-mode**, eu fiz uma atualização do **Elcord** para o `ts-mode` em [Elcord-ts](https://github.com/rahvax/elcord-ts)
 
