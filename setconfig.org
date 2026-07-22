@@ -1,6 +1,5 @@
 #+title: Emacs init.el Literate Configuration
 #+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
-
 + Para exportar utilize ~C-c C-v t~
 
 * Index OF
@@ -11,6 +10,7 @@
   - [[Binds do Emacs]]
   - [[MELPA]]
   - [[Minhas Funções]]
+  - [[Configurações do IRC]]
 - [[Configurações de pacotes]]
   - [[Latex]]
   - [[Orderless]]
