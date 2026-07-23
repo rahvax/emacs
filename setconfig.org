@@ -302,24 +302,24 @@ Aqui será definido os blocos do Org-roam, uma biblioteca de notas.
   (setq org-roam-capture-templates
    '(("a" "Aeternus")
      ("ag" "Geral" plain (file "~/Documents/org/templates/aeternus_default.org")
-      :if-new (file+head "aeternus/aet_${slug}.org" "#+title: Aeternus: ${title}\n#+author: %n\n#+date: %U\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:\n\n")
+      :if-new (file+head "aeternus/aet_${slug}.org" "#+title: Aeternus: ${title}\n#+author: %n \n#+date: %U\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:\n\n")
       :unarrowed t)
      ("am" "Aeternus Manuscritos" plain (file "~/Documents/org/templates/aeternus_ancient.org")
-      :if-new (file+head "aeternus/anc_${slug}.org" "#+title: Aeternus: ${title}\n#+author: %n\n#+date: %U\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:ancient:language:\n\n")
+      :if-new (file+head "aeternus/anc_${slug}.org" "#+title: Aeternus: ${title}\n#+author: %n \n#+date: %U\n#+bibliography: references.bib\n#+cite_export: csl abnt.csl\n#+filetags: :aeternus:ancient:language:\n\n")
       :unarrowed t)
      
      ("t" "Tecnologia")
      ("ti" "IA" plain "%?"
-      :target (file+head "tech/ia/${slug}.org" "#+title: IA: ${title}\n#+filetags: :IA:tech:\n#+author: %n\n#+date: %U\n\n")
+      :target (file+head "tech/ia/${slug}.org" "#+title: IA: ${title}\n#+filetags: :IA:tech:\n#+author: %n \n#+date: %U\n\n")
       :unarrowed t)
      ("tg" "General" plain "%?"
-      :target (file+head "tech/${slug}.org" "#+title: Tech: ${title}\n#+filetags: :tech:\n#+author: %n\n#+date: %U\n\n")
+      :target (file+head "tech/${slug}.org" "#+title: Tech: ${title}\n#+filetags: :tech:\n#+author: %n \n#+date: %U\n\n")
       :unarrowed t)
      ("tc" "Code" plain "%?"
-      :target (file+head "tech/code/${slug}.org" "#+title: Code: ${title}\n#+filetags: :tech:code:programação:\n#+author: %n\n#+date: %U\n\n")
+      :target (file+head "tech/code/${slug}.org" "#+title: Code: ${title}\n#+filetags: :tech:code:programação:\n#+author: %n \n#+date: %U\n\n")
       :unarrowed t)
      ("to" "Offsec" plain "%?"
-      :target (file+head "tech/offsec/${slug}.org" "#+title: OffSec: ${title}\n#+filetags: :offsec:tech:infosec:\n#+author: %n\n#+date: %U\n\n")
+      :target (file+head "tech/offsec/${slug}.org" "#+title: OffSec: ${title}\n#+filetags: :offsec:tech:infosec:\n#+author: %n \n#+date: %U\n\n")
       :unarrowed t)
 
      ("c" "Ciência")
