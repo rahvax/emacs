@@ -77,7 +77,6 @@ São configurações básicas do editor em si. Aqui é onde defino configuraçõ
 ** Binds do Emacs
 Aqui é colocado os atalhos personalizados do Emacs.
 1. abrir este arquivo com ~C-x c~
-2. abrir configuração do i3wm com ~C-i c~
 #+begin_src emacs-lisp
 (use-package emacs
   :config
