@@ -522,7 +522,6 @@ Configurações relacionadas ao criar e gerenciar projetos no Emacs.
 
 ** Dashboard
 Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Emacs, apenas sobrescreve uma nova janela.
-Defina seu nome aqui, está como =Rahvax=.
 #+begin_src emacs-lisp
 (use-package dashboard
   :ensure t
