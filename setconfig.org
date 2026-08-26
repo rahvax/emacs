@@ -1,7 +1,7 @@
 #+title: Emacs init.el Literate Configuration
 #+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
 + Para exportar utilize ~C-c C-v t~
-
+- Uma observação é que muitas configurações eu copiei do Github do pacote e só modifiquei o que era necessário, então recomendo conferir individualmente os pacotes e modificar o que quiser ao seu gosto. Como ainda não entendo tudo que pode oferecer, não personalizei muito.
 * Index OF
 - [[Configurações básicas]]
   - [[Custom.el]]
@@ -12,6 +12,7 @@
   - [[Minhas Funções]]
   - [[Configurações do IRC]]
 - [[Configurações de pacotes]]
+  - [[Slack-C]]
   - [[Latex]]
   - [[Orderless]]
   - [[PDF-Tools]]
@@ -39,6 +40,7 @@
 São configurações básicas do editor em si. Aqui é onde defino configurações que representem o editor e suas funções nativas.
 ** Custom.el
 #+begin_src emacs-lisp
+;;; init.el --- Configurações do meu Emacs -*- lexical-binding: t; -*-
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory)) 
 (ignore-errors (load custom-file))
 (load-file (expand-file-name "ambiente.el" user-emacs-directory))
@@ -121,6 +123,16 @@ Na primeira instalação é necessário descomentar, mas após, só vai tornar o
 
 * Configurações de pacotes
 Aqui vai encontrar configurações de pacotes nativos ou instalados.
+** Slack-C
+Meu próprio pacote para criar projetos em C rapidamente.
+#+BEGIN_SRC emacs-lisp
+(use-package slack-c 
+  ;;:ensure nil
+  :vc (:url "https://github.com/rahvax/slack-c.el.git"
+	    :rev :newest)
+  :custom
+  (slackc-dir-path "~/Documents/Forgejo/"))
+#+END_SRC
 ** Latex
 #+BEGIN_SRC emacs-lisp
 (use-package tex :ensure auctex)
@@ -588,6 +600,9 @@ Configurações do tema do Emacs, estou usando o Doom.
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (load-theme 'doom-one t)
+  (set-face-attribute 'gnus-group-news-low-empty nil
+                    :inherit 'gnus-group-mail-1-empty
+                    :weight 'normal)
   ;; treemacs theme
   (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   (doom-themes-treemacs-config)
