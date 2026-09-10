@@ -600,9 +600,9 @@ Configurações do tema do Emacs, estou usando o Doom.
         doom-themes-enable-italic t) 
   ;; Carregar o tema e aplicar correção
   (load-theme 'doom-one t)
-  (set-face-attribute 'gnus-group-news-low-empty nil
-                    :inherit 'gnus-group-mail-1-empty
-                    :weight 'normal)
+  ;;(set-face-attribute 'gnus-group-news-low-empty nil
+  ;;                :inherit 'gnus-group-mail-1-empty
+  ;;                :weight 'normal)
 
   (setq doom-themes-treemacs-theme "doom-atom") 
   (doom-themes-treemacs-config)
@@ -878,27 +878,18 @@ A configuração da "gramática" das linguagens de programação que eu uso.
 (use-package c-ts-mode
   :mode "\\.c\\'"
   :mode "\\.h\\'"
-  :hook ((c-ts-mode . eglot-ensure))
+  :hook (c-ts-mode . eglot-ensure)
   :init
-  ; (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
   (add-to-list 'org-src-lang-modes '("c" . c-ts))
-  :config
-  (defun my-c-ts-indent-style ()
-    "Override the built-in K&R indentation style with some additional rules"
-    `(((match "case_statement" "compound_statement")
-       parent-bol
-       c-ts-indent-offset)
-      ,@(cdr (assoc 'c
-		    (c-ts-mode--simple-indent-rules 'c 'k&r)))))
   :custom
-  (c-ts-mode-indent-style #'my-c-ts-indent-style))
+  (c-ts-mode-indent-style 'k&r)
+  (c-ts-indent-offset 2))
 
 (use-package c++-ts-mode
   :mode "\\.cpp\\'"
   :mode "\\.cxx\\'"
   :mode "\\.hpp\\'"
-  :hook ((c++-ts-mode . eglot-ensure)
-)
+  :hook ((c++-ts-mode . eglot-ensure))
   :init
   ; (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
   (add-to-list 'org-src-lang-modes '("c++" . c++-ts))
