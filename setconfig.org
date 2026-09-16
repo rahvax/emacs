@@ -541,9 +541,9 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
   (setq dashboard-banner-logo-title "Bem-vindo ao Emacs, " + ambiente/emacs-usuario)
   (setq dashboard-startup-banner 'logo)
   (setq dashboard-center-content t)
-  (setq dashboard-items '((projects  . 4)
-                          (bookmarks . 5)
-                          (recents   . 2)))
+  (setq dashboard-items '((projects  . 5)
+                          (recents   . 2)
+                          (agenda    . 5)))
   (setq dashboard-vertically-center-content t)
   (setq dashboard-display-icons-p t)     ; display icons on both GUI and terminal
   ;(setq dashboard-icon-type 'nerd-icons) ; use `nerd-icons' package
