@@ -32,7 +32,7 @@ Crie um arquivo `.emacs.d/ambiente.el` (nomes opcionais) e defina as seguintes v
 ;;; Só remover o que não quiser usar
 (setq ambiente/irc-ip "IP_DO_SERVIDOR")
 (setq ambiente/irc-porta 6669)
-(setq ambiente/emacs-usuario "Rahvax")
+(setq ambiente/emacs-welcome "Seja bem-vindo, Rahvax!")
 (setq ambiente/emacs-config "~/Documents/Forgejo/emacs/setconfig.org")
 (setq ambiente/emacs-banner "~/Documents/forgejo/emacs/banner.txt")
 ```
