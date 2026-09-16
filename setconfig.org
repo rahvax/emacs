@@ -539,15 +539,15 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
   :ensure t
   :config
   (setq dashboard-banner-logo-title "Bem-vindo ao Emacs, " + ambiente/emacs-usuario)
-  (setq dashboard-startup-banner 'logo)
+  (setq dashboard-startup-banner "~/Documents/Forgejo/emacs/banner.txt")
   (setq dashboard-center-content t)
   (setq dashboard-items '((projects  . 5)
                           (recents   . 2)
                           (agenda    . 5)))
   (setq dashboard-vertically-center-content t)
-  (setq dashboard-display-icons-p t)     ; display icons on both GUI and terminal
-  ;(setq dashboard-icon-type 'nerd-icons) ; use `nerd-icons' package
-  (setq dashboard-icon-type 'all-the-icons)  ; use `all-the-icons' package
+  (setq dashboard-display-icons-p t)
+  ;;(setq dashboard-icon-type 'nerd-icons) 
+  (setq dashboard-icon-type 'all-the-icons)  
   (dashboard-modify-heading-icons '((recents   . "file-text")
                                   (projects . "file-directory") (agenda . "database")))
   (setq dashboard-set-heading-icons t)
