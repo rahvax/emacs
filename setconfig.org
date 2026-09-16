@@ -546,7 +546,6 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
                           (agenda    . 5)))
   (setq dashboard-vertically-center-content t)
   (setq dashboard-display-icons-p t)
-  ;;(setq dashboard-icon-type 'nerd-icons) 
   (setq dashboard-icon-type 'all-the-icons)  
   (dashboard-modify-heading-icons '((recents   . "file-text")
                                   (projects . "file-directory") (agenda . "database")))
