@@ -538,7 +538,7 @@ Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Em
 (use-package dashboard
   :ensure t
   :config
-  (setq dashboard-banner-logo-title ambiente/emacs-usuario)
+  (setq dashboard-banner-logo-title ambiente/emacs-welcome)
   (setq dashboard-startup-banner ambiente/emacs-banner)
   (setq dashboard-center-content t)
   (setq dashboard-items '((projects  . 5)
