@@ -280,8 +280,10 @@ Aqui é definido os atalhos, capturas e outros.
        "* TODO %? :resch: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
       ("ae" "Escrever" entry (file+olp "~/Documents/org/tasks.org" "Write")
        "* TODO %? :write: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ac" "CTF" entry (file+olp "~/Documents/org/tasks.org" "CTF")
+      ("af" "CTF" entry (file+olp "~/Documents/org/tasks.org" "CTF")
        "* TODO %? :ctf: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("ac" "Code" entry (file+olp "~/Documents/org/tasks.org" "Code")
+       "* TODO %? :code: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
 
       ))
   :bind ;; atalhos
