@@ -276,20 +276,13 @@ Aqui é definido os atalhos, capturas e outros.
       ("a" "Aprender")
       ("al" "Leitura" entry (file+olp "~/Documents/org/tasks.org" "Read")
        "* TOREAD %? :read: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("lp" "Pesquisa" entry (file+olp "~/Documents/org/tasks.org" "Research")
+      ("ap" "Pesquisa" entry (file+olp "~/Documents/org/tasks.org" "Research")
        "* TODO %? :resch: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("le" "Escrever" entry (file+olp "~/Documents/org/tasks.org" "Write")
+      ("ae" "Escrever" entry (file+olp "~/Documents/org/tasks.org" "Write")
        "* TODO %? :write: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+      ("ac" "CTF" entry (file+olp "~/Documents/org/tasks.org" "CTF")
+       "* TODO %? :ctf: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
 
-      ("a" "Aeternus")
-      ("ad" "Desafio" entry (file+olp "~/Documents/org/tasks.org" "Research")
-       "* TODO %? :chalg: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("aq" "Questão" entry (file+olp "~/Documents/org/tasks.org" "Question")
-       "* TODO %? :quest: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ac" "Code" entry (file+olp "~/Documents/org/tasks.org" "Code")
-       "* TODO %? :code: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ag" "Geral" entry (file+olp "~/Documents/org/tasks.org" "General")
-       "* TODO %? :gener: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
       ))
   :bind ;; atalhos
   ("C-c a" . org-agenda)
@@ -599,10 +592,6 @@ Configurações do tema do Emacs, estou usando o Doom.
         doom-themes-enable-italic t) 
   ;; Carregar o tema e aplicar correção
   (load-theme 'doom-one t)
-  ;;(set-face-attribute 'gnus-group-news-low-empty nil
-  ;;                :inherit 'gnus-group-mail-1-empty
-  ;;                :weight 'normal)
-
   (setq doom-themes-treemacs-theme "doom-atom") 
   (doom-themes-treemacs-config)
   (doom-themes-org-config))
