@@ -86,7 +86,7 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
   (use-package org
     :ensure t
     :custom
-    (org-directory (file-truename "~/Documents/org/"))    ;; Diretório de trabalho do Org
+    (org-directory (file-truename ambiente/org-workflow))    ;; Diretório de trabalho do Org
     (org-habit-show-habits t)                             ;; Exibir os hábitos na agenda
     (org-startup-truncated t)                             ;; Deixar arquivos ORG truncados
 
@@ -100,7 +100,7 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
     ;; Modelos de capturas para notas
     (org-capture-templates '(
   			   ("p" "Pessoal")
-  			   ("pc" "Casa" entry (file+olp "~/Documents/org/tasks.org" "Home")
+  			   ("pc" "Casa" entry (file+olp ambiente/org-workflow)
   			    "* TODO %? :home: \nSCHEDULED: %^t\n%i" :empy-lines-after 1)
   			   ))
     
