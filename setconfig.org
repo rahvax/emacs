@@ -111,24 +111,24 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
   			   ;;; Tarefas financeiras
   			   ("f" "Financeiro")
   			   ("fc" "Custo-Fixo" entry (file+olp ambiente/org-workflow-tasks "Custo-Fixo")
-  			    "* TODO %? :bill: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+  			    "* TODO %? :bill: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
   			   ("fi" "Investir" entry (file+olp ambiente/org-workflow-tasks "Investir")
-  			    "* TODO %? :ivst: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+  			    "* TODO %? :ivst: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
   			   ("fp" "Pagar" entry (file+olp ambiente/org-workflow-tasks "Pagar")
-  			    "* TODO %? :pay: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+  			    "* TODO %? :pay: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
   			   ("fr" "Receber" entry (file+olp ambiente/org-workflow-tasks "Receber")
-  			    "* TODO %? :mony: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+  			    "* TODO %? :mony: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
 
   			   ;;; Tarefas didáticas
   			   ("e" "Estudos")
   			   ("es" "Pesquisar" entry (file+olp ambiente/org-workflow-tasks "Pesquisar")
-  			    "* TODO %? :sarx: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+  			    "* TODO %? :sarx: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
   			   ("ep" "Praticar" entry (file+olp ambiente/org-workflow-tasks "Praticar")
-  			    "* TODO %? :prtc: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+  			    "* TODO %? :prtc: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
   			   ("ea" "Anotar" entry (file+olp ambiente/org-workflow-tasks "Anotar")
-  			    "* TODO %? :note: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+  			    "* TODO %? :note: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
   			   ("el" "Aprender" entry (file+olp ambiente/org-workflow-tasks "Aprender")
-  			    "* TODO %? :lern: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+  			    "* TODO %? :lern: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
   			   ))
     
     :bind 
