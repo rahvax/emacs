@@ -89,6 +89,12 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
     (org-directory (file-truename "~/Documents/org/"))    ;; Diretório de trabalho do Org
     (org-habit-show-habits t)                             ;; Exibir os hábitos na agenda
     (org-startup-truncated t)                             ;; Deixar arquivos ORG truncados
+    ;; Binds para os TODO para usar na Agenda
+    (org-todo-keywords '((sequence "TODO(t)" "ONGOING(o)" "WAIT(w@)" "|" "DONE(d!)" "CANCELED(c@)")
+  		       (sequence "[ ](T)" "[-](O)" "[?](W)" "|" "[X](D)")
+  		       (sequence "POST(p)" "|" "POSTED(P!)")
+  		       (sequence "TOREAD(r)" "|" "READ(R!)")
+  		       (sequence "TOLEARN(l)" "|" "LEARNED(L!)")))
     :bind 
     ("C-c a" . org-agenda)
     ("C-c l" . org-store-link)
