@@ -117,6 +117,16 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
   			   ("fr" "Receber" entry (file+olp ambiente/org-workflow-tasks "Receber")
   			    "* TODO %? :mony: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
 
+  			   ("e" "Estudos")
+  			   ("es" "Pesquisar" entry (file+olp ambiente/org-workflow-tasks "Pesquisar")
+  			    "* TODO %? :sarx: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+  			   ("ep" "Praticar" entry (file+olp ambiente/org-workflow-tasks "Praticar")
+  			    "* TODO %? :prtc: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+  			   ("ea" "Anotar" entry (file+olp ambiente/org-workflow-tasks "Anotar")
+  			    "* TODO %? :note: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+  			   ("el" "Aprender" entry (file+olp ambiente/org-workflow-tasks "Aprender")
+  			    "* TODO %? :lern: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+
   			   
   			   ))
     
