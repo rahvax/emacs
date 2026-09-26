@@ -67,7 +67,7 @@ Descomente a linha =45=, =48= e =49= sempre que for instalar pacotes (ou iniciar
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
-(package-refresh-contents)
+;;(package-refresh-contents)
 #+end_src
 
 *** Org-Agenda
@@ -284,6 +284,7 @@ Salvar os usos anteriores do =M-x=.
 #+end_src
 
 *** Magit
+O gerenciador GIT do Emacs. É muito útil para trabalhar em repositórios de forma bem mais flexível.
 #+begin_src emacs-lisp
   (use-package magit
     :ensure t)
