@@ -6,5 +6,8 @@ Essa configuração foi feita por mim, com foco e carinho em usar o Emacs como m
 # Emacs - Configuração Pessoal
 Minha configuração personalizada do editor GNU/Emacs, feita de uma forma que iniciantes possam usar ela.
 ## Como Instalar
+(WIP)
 ## Pós-Instalão
+(WIP)
 ## Conclusão
+(WIP)
