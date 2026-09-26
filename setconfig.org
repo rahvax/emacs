@@ -100,7 +100,7 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
     ;; Modelos de capturas para notas
     (org-capture-templates '(
   			   ("p" "Pessoal")
-  			   ("pc" "Casa" entry (file+olp ambiente/org-workflow "Home")
+  			   ("pc" "Casa" entry (file+olp ambiente/org-workflow-tasks "Home")
   			    "* TODO %? :home: \nSCHEDULED: %^t\n%i" :empy-lines-after 1)
   			   ))
     
