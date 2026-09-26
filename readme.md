@@ -1,43 +1,10 @@
-# Emacs - Configuração
-No Emacs usamos sequências de teclas descritas por `C-` e `M-` que são para:
-* `C-` - _Ctrl +_
-* `M-` - _Alt +_ 
-* `S-` - _Shift +_
-* `s-` - _Super(Windows) +_
-* `RET` - é o ato de dar "enter"
+* Comentários
+Eu usei o Emacs, por aproximadamente dois anos, utilizando algumas configurações personalizadas - e outras copiadas dos repositórios oficiais, ou de meu amigo [G. Rosa](https://github.com/gabehellz) que é um usuário mais experiente que eu. Porém, eu decidi refatorar o Emacs com uma configuração própria, onde eu devo entender o que minha configuração faz e o motivo das coisas estarem aqui.
 
-Então o comando `C-x C-c`, para sair do Emacs, é `Ctrl + x` e depois `Ctrl + c`.
+Essa configuração foi feita por mim, com foco e carinho em usar o Emacs como meu ambiente de trabalho e lazer. É aqui que eu trabalho, estudo e até organizo minha rotina. Então talvez a configuração não atenda você como um usuário, mas certamente ela foi construída pensando em usuários iniciantes como eu.
 
-## Aplicando configuração
-Após instalar o Emacs, utilize `C-x C-f` e digite o diretório de onde foi baixado o arquivo `setconfig.org`, dentro do clone desse repositório. Procure no arquivo pelas configurações de diretórios e arquivos, caso queira modificar. Se não, apenas crie-os:
-* `~/Documents/org/roam`
-* `~/Documents/org/tasks.org`
-* `~/.emacs.d/file.bib`
-* `~/Documents/org/csl/`
-
-Então descomente a linha *62*, *65* e *66*. São as linhas comentadas dentro do bloco **MELPA**. 
-
-Faça então:
-* Copie `setconfig.org` para `~/Documents/org/roam/emacs_config.org`
-* Mova `abnt.csl` para `~/Documents/org/csl/abnt.csl`
-* Baixe o orderless `M-x package-vc-install RET orderless`
-* Baixe também o org-modern com `M-x package-vc-install RET org-modern`
-* Use o comando `M-x treesit-install-language-grammar RET` e escolha a linguagem para baixar o Treesit
-* Baixe as fontes com os comandos `M-x nerd-icons-install-fonts RET` e `M-x all-the-icons-install-fonts`
-
-Baixe os LSP para as linguagens que deseja [aqui](https://github.com/joaotavora/eglot?tab=readme-ov-file#connecting-to-a-server), e pronto! Após isso, utilize o comando `C-c C-v t` para aplicar as configurações ao arquivo `init.el`. Feche o Emacs, e abra novamente.
-### Variáveis privadas
-Crie um arquivo `.emacs.d/ambiente.el` (nomes opcionais) e defina as seguintes variáveis:
-```lisp
-;;; Só remover o que não quiser usar
-(setq ambiente/irc-ip "IP_DO_SERVIDOR")
-(setq ambiente/irc-porta 6669)
-(setq ambiente/emacs-welcome "Seja bem-vindo, Rahvax!")
-(setq ambiente/emacs-config "~/Documents/Forgejo/emacs/setconfig.org")
-(setq ambiente/emacs-banner "~/Documents/forgejo/emacs/banner.txt")
-```
-## Observação: PDFs
-A instalação do PDF é necessário dar o comando `M-x pdf-tools-install`; caso esteja usando doas, utilize primeiro a instalação manual com `doas pacman -S --needed base-devel libpng zlib poppler-glib`.
-## Elcord
-Caso queira o **Elcord-mode**, eu fiz uma atualização do **Elcord** para o `ts-mode` em [Elcord-ts](https://github.com/rahvax/elcord-ts)
-
+# Emacs - Configuração Pessoal
+Minha configuração personalizada do editor GNU/Emacs, feita de uma forma que iniciantes possam usar ela.
+** Como Instalar
+** Pós-Instalão
+** Conclusão
