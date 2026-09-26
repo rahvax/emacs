@@ -1,947 +1,290 @@
 #+title: Emacs init.el Literate Configuration
 #+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
 + Para exportar utilize ~C-c C-v t~
-- Uma observação é que muitas configurações eu copiei do Github do pacote e só modifiquei o que era necessário, então recomendo conferir individualmente os pacotes e modificar o que quiser ao seu gosto. Como ainda não entendo tudo que pode oferecer, não personalizei muito.
-* Index OF
-- [[Configurações básicas]]
-  - [[Custom.el]]
-  - [[Backup e cache]]
-  - [[Configurações do editor]]
-  - [[Binds do Emacs]]
-  - [[MELPA]]
-  - [[Minhas Funções]]
-  - [[Configurações do IRC]]
-- [[Configurações de pacotes]]
-  - [[Slack-C]]
-  - [[Latex]]
-  - [[Orderless]]
-  - [[PDF-Tools]]
-  - [[Org]]
-  - [[Projectile]]
-  - [[Citar]]
-  - [[Embark]]
-  - [[Company]]
-  - [[Dashboard]]
-  - [[Editorconfig]]
-  - [[Babel]]
-  - [[Doom themes]]
-  - [[Evil-mode]]
-  - [[Wich-key]]
-  - [[Vertico]]
-  - [[Treemacs]]
-  - [[VTerm]]
-- [[Linguagens]]
-  - [[Treesiter]]
-  - [[Flycheck]]
-  - [[Eglot]]
-  - [[LSP]]
-    
-* Configurações básicas
-São configurações básicas do editor em si. Aqui é onde defino configurações que representem o editor e suas funções nativas.
-** Custom.el
+
+* Index Of
+- [[Core]]
+  - [[Configuração Editor]]
+    - [[Inicializar arquivos]]
+    - [[Ambiente UTF]]
+    - [[Manter pacotes recentes]]
+    - [[Uteis nativos]]
+    - [[Melpa]]
+    - [[Org-Agenda]]
+    - [[Org-Mode]]
+    - [[Tema Emacs]]
+  - [[Funções Elisp]]
+    - [[Criar LaTeX]]
+    - [[Binds Emacs]]
+    - [[ERC]]
+  - [[Pacotes]]
+    - [[Slack-C]]
+    - [[Org-Modern]]
+    - [[Projectile]]
+    - [[Dashboard]]
+    - [[Evil-Mode]]
+    - [[VTerm]]
+    - [[Vertico]]
+    - [[Orderless]]
+    - [[Savehist]]
+
+* Core
+** Configuração Editor
+*** Inicializar arquivos
+Aqui estou iniciando um arquivo de configuração de ambiente do Emacs.
 #+begin_src emacs-lisp
-;;; init.el --- Configurações do meu Emacs -*- lexical-binding: t; -*-
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory)) 
-(ignore-errors (load custom-file))
-(load-file (expand-file-name "ambiente.el" user-emacs-directory))
+  ;;; init.el --- Configurações do meu Emacs -*- lexical-binding: t; -*-
+  ;; Inicializar o arquivo usado para configurações do ambiente  
+  (load-file (expand-file-name "ambiente.el" user-emacs-directory))
 #+end_src
 
-** Backup e cache
+*** Ambiente UTF
 #+begin_src emacs-lisp
-(defvar user-cache-directory (expand-file-name ".cache" user-emacs-directory))
-(defvar user-backup-directory (expand-file-name "backup" user-emacs-directory))
-(defvar user-autosave-directory (expand-file-name "autosave" user-emacs-directory))
-(dolist (dir (list user-cache-directory user-backup-directory user-autosave-directory))
-  (when (not (file-directory-p dir))
-    (make-directory dir t)))
-(setq backup-directory-alist `(("." . ,user-backup-directory))
-      auto-save-filename-transforms `(("." ,user-autosave-directory t))
-      auto-save-list-file-prefix (concat user-autosave-directory ".saves-")
-      tramp-backup-directory-alist `((".*" . ,user-backup-directory))
-      tramp-auto-save-directory user-autosave-directory)
+  (prefer-coding-system 'utf-8-unix)             ;; Definindo UTF Unix
+  (set-language-environment "UTF-8")             ;; ^
+  (set-face-attribute 'default nil :height 140)  ;; Tamanho da fonte
 #+end_src
 
-** Configurações do editor
+*** Manter pacotes recentes
 #+begin_src emacs-lisp
-(prefer-coding-system 'utf-8-unix)
-(set-language-environment "UTF-8")
-(set-face-attribute 'default nil :height 140)
-(setq load-prefer-newer t
-      inhibit-startup-message t)
-(global-display-line-numbers-mode 1)
-(scroll-bar-mode -1)
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(when (fboundp 'electric-pair-mode)
-  (electric-pair-mode t))
+  (setq load-prefer-newer t                      ;; Mantém os .el mais recentes
+        inhibit-startup-message t)
 #+end_src
 
-** Binds do Emacs
-Aqui é colocado os atalhos personalizados do Emacs.
-1. abrir este arquivo com ~C-x c~
+*** Uteis nativos
+Se quiser novamente os menus do Emacs, apenas altere para =1=.
 #+begin_src emacs-lisp
-(use-package emacs
-  :config
-  (defun open-init-file-config ()
-    (interactive)
-    (find-file ambiente/emacs-config))
-  :bind ("C-x c" . open-init-file-config))
+  (global-display-line-numbers-mode 1)           ;; Exibir o número da linha
+  (scroll-bar-mode -1)                           ;; Desliga a scrollbar do Emacs (ON 1 | -1 OFF)
+  (menu-bar-mode -1)                             ;; Desliga os menus do Emacs
+  (tool-bar-mode -1)                             ;; Desligar o menu de ferramentas
 #+end_src
 
-** MELPA
-Essa configuração é para definir o mirror do =MELPA=.
-Há algumas coisas comentadas nesse bloco, e isso é proposital:
-Na primeira instalação é necessário descomentar, mas após, só vai tornar o Emacs lento.
+*** Melpa
+Descomente a linha =45=, =48= e =49= sempre que for instalar pacotes (ou iniciar a configuração)
 #+begin_src emacs-lisp
-;;(require 'package)
+(require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/"))
-;;(package-initialize)
-;;(package-refresh-contents)
+(package-initialize)
+(package-refresh-contents)
 #+end_src
 
-** Minhas Funções
-~Criar arquivo Latex~
-#+BEGIN_SRC emacs-lisp
-(use-package emacs
-  :preface
-  (defun open-new-latex-file ()
-    (interactive)
-    (let* ((directory-name "~/Documents/org/roam/latex/")
-	   (file-name (read-from-minibuffer "Filename: ")))
-      (with-temp-file (format "%s/%s.tex" directory-name file-name))
-      (find-file (format "%s/%s.tex" directory-name file-name))
-    ))
-  :bind ("C-c x" . open-new-latex-file))
-#+END_SRC
-
-** Configurações do IRC
-#+BEGIN_SRC emacs-lisp
-(setq erc-server ambiente/irc-ip)
-(setq erc-port ambiente/irc-porta)
-#+END_SRC
-
-* Configurações de pacotes
-Aqui vai encontrar configurações de pacotes nativos ou instalados.
-** Slack-C
-Meu próprio pacote para criar projetos em C rapidamente.
-#+BEGIN_SRC emacs-lisp
-(use-package slack-c 
-  ;;:ensure nil
-  :vc (:url "https://github.com/rahvax/slack-c.el.git"
-	    :rev :newest)
-  :custom
-  (slackc-dir-path "~/Documents/Forgejo/"))
-#+END_SRC
-** Latex
-#+BEGIN_SRC emacs-lisp
-(use-package tex :ensure auctex)
-(use-package latex :ensure auctex)
-(use-package auctex
-  :ensure t
-  :hook (LaTeX-mode . eglot-ensure)
-  :preface
-  (defun latex-math-from-calc ()
-    (interactive)
-    (cond ((region-active-p)
-       (let* ((beg (region-beginning))
-          (end (region-end))
-          (string (buffer-substring-no-properties beg end)))
-         (kill-region beg end)
-         (insert (calc-eval `(,string calc-language latex
-                      calc-prefer-frac t
-                      calc-angle-mode rad)))))
-      (t (let ((l (thing-at-point 'line)))
-           (end-of-line 1) (kill-line 0)
-           (insert (calc-eval `(,l
-                    calc-language latex
-                    calc-prefer-frac t
-                    calc-angle-mode rad)))))))
-  :config
-  (setq TeX-view-program-selection '((output-pdf "PDF Tools")))
-  (setq TeX-view-program-list '(("PDF Tools" TeX-pdf-tools-sync-view)))
-  (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
-  :bind (:map LaTeX-mode-map
-          ("C-x l l" . latex-math-from-calc)))
-
-(use-package cdlatex
-  :ensure t
-  :hook ((LaTeX-mode . turn-on-cdlatex)
-     (org-mode . org-cdlatex-mode)))
-#+END_SRC
-** Orderless
-É um autocomplete para o =M-x=, ajuda a ficar mais fácil de pesquisar funções e comandos do Emacs.
+*** Org-Agenda
+As configurações da agenda nativa do Emacs.
+O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salvas.
 #+begin_src emacs-lisp
-(use-package orderless
-  :custom
-  (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion))))
-  :config
-  (defun just-one-face (fn &rest args)
-    (let ((orderless-match-faces [completions-common-part]))
-      (apply fn args)))
-
-  (advice-add 'company-capf--candidates :around #'just-one-face)
-  (setq orderless-component-separator "[ &]"))
-#+end_src
-
-** PDF-Tools
-Necessário para visualizar PDFs pelo Emacs.
-#+begin_src emacs-lisp
-(use-package pdf-tools
-  :ensure t
-  :mode ("\\.pdf\\'" . pdf-view-mode)
-  :magic ("%PDF" . pdf-view-mode)
-  :config
-  (pdf-tools-install-noverify)
-  :bind
-  (:map pdf-view-mode-map ("q" . #'kill-current-buffer)))
-;; Desativar numeração de linha em modos específicos
-(dolist (mode '(pdf-view-mode-hook writeroom-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
-#+end_src
-
-** Org
-~Org-modern~
-Apenas um visual mais bonito para arquivos Org-mode. Essa função ativa ele sempre.
-#+begin_src emacs-lisp
-(use-package org-modern
-  :after org
-  :config
-  (global-org-modern-mode))
-#+end_src
-
-~Org-agenda~
-Org-Agenda =[C-c a a]= é a agenda do Emacs.
-Aqui foi definido o arquivo de tarefas, =tasks.org=. 
-#+begin_src emacs-lisp
-(use-package org-agenda
+  (use-package org-habit)                        ;; Ligar os hábitos
+  (use-package org-agenda
   :custom
   (org-agenda-files '("tasks.org"))
   (org-agenda-start-with-log-mode t))
 #+end_src
 
-~Org~
-Configurações para os arquivos de Org-mode.
-Aqui é definido os atalhos, capturas e outros.
+*** Org-Mode
 #+begin_src emacs-lisp
-(use-package org-habit)
-(use-package org
-  :ensure t
-  :custom
-  (org-directory (file-truename "~/Documents/org/"))
-  (org-todo-keywords '((sequence "TODO(t)" "ONGOING(o)" "WAIT(w@)" "|" "DONE(d!)" "CANCELED(c@)")
-		       (sequence "[ ](T)" "[-](O)" "[?](W)" "|" "[X](D)")
-		       (sequence "POST(p)" "|" "POSTED(P!)")
-		       (sequence "TOREAD(r)" "|" "READ(R!)")
-		       (sequence "TOLEARN(l)" "|" "LEARNED(L!)")))
-  (org-hide-emphasis-markers t)
-  (add-to-list 'org-modules 'org-habit t)
-  (org-habit-show-habits t)
-  (org-format-latex-options (plist-put org-format-latex-options :scale 2.0)) ;; scala do latex
- ;; indentation
-  (org-startup-truncated t)
-  (org-startup-indented t)
- ;; src block indentation
-  (org-src-preserve-indentation t)
-  (org-src-tab-acts-natively t)
-  (org-edit-src-content-indentation 0)
-;  ; logging
-  (org-log-done 'time)
-  (org-log-into-drawer t)
-;;; Templates
-  (org-capture-templates
-   '(("p" "Pessoal")
-      ("pc" "Casa" entry (file+olp "~/Documents/org/tasks.org" "Home")
-       "* TODO %? :home: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ps" "Saúde" entry (file+olp "~/Documents/org/tasks.org" "Health")
-       "* TODO %? :helt: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("pp" "Projetos" entry (file+olp "~/Documents/org/tasks.org" "Project")
-       "* TODO %? :projc: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("pg" "Geral" entry (file+olp "~/Documents/org/tasks.org" "General")
-       "* TODO %? :gener: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("pr" "Rotina" entry (file+olp "~/Documents/org/tasks.org" "Rotina")
-       "* TODO %? :rotina: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
-      
-      ("f" "Financeiro")
-      ("fp" "Pagar" entry (file+olp "~/Documents/org/tasks.org" "Pay")
-       "* TODO %? :pay: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ft" "Trabalho" entry (file+olp "~/Documents/org/tasks.org" "Work")
-       "* TODO %? :work: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("fi" "Investimento" entry (file+olp "~/Documents/org/tasks.org" "Investment")
-       "* TODO %? :invmt: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("fc" "Contas" entry (file+olp "~/Documents/org/tasks.org" "Bill")
-       "* TODO %? :bill: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+  (use-package org
+    :ensure t
+    :custom
+    (org-directory (file-truename "~/Documents/org/"))    ;; Diretório de trabalho do Org
+    (org-habit-show-habits t)                             ;; Exibir os hábitos na agenda
+    :bind 
+    ("C-c a" . org-agenda)
+    ("C-c l" . org-store-link)
+    ("C-c c" . org-capture) )
+#+end_src
 
-      ("a" "Aprender")
-      ("al" "Leitura" entry (file+olp "~/Documents/org/tasks.org" "Read")
-       "* TOREAD %? :read: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ap" "Pesquisa" entry (file+olp "~/Documents/org/tasks.org" "Research")
-       "* TODO %? :resch: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ae" "Escrever" entry (file+olp "~/Documents/org/tasks.org" "Write")
-       "* TODO %? :write: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("af" "CTF" entry (file+olp "~/Documents/org/tasks.org" "CTF")
-       "* TODO %? :ctf: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
-      ("ac" "Code" entry (file+olp "~/Documents/org/tasks.org" "Code")
-       "* TODO %? :code: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+*** Tema Emacs
+#+begin_src emacs-lisp
+  ;;(load-theme 'modus-vivendi t)
+  ;;(load-theme 'tsdh-dark t)
+  (load-theme 'wombat t)
+#+end_src
 
+** Funções Elisp
+*** Fechar blocos
+#+begin_src emacs-lisp
+  (when (fboundp 'electric-pair-mode)            ;; Fechar blocos () {}
+    (electric-pair-mode t))                      
+#+end_src
+
+*** Criar LaTeX
+Essa é uma função minha que criei para criar arquivos como se fosse o Org-Roam.
+#+begin_src emacs-lisp
+  (use-package emacs
+    :preface
+    (defun open-new-latex-file ()
+      (interactive)
+      (let* ((directory-name "~/Documents/org/roam/latex/")
+  	   (file-name (read-from-minibuffer "Filename: ")))
+        (with-temp-file (format "%s/%s.tex" directory-name file-name))
+        (find-file (format "%s/%s.tex" directory-name file-name))
       ))
-  :bind ;; atalhos
-  ("C-c a" . org-agenda)
-  ("C-c l" . org-store-link)
-  ("C-c c" . org-capture))
+    :bind ("C-c x" . open-new-latex-file))
 #+end_src
 
-~Org-roam~
-Aqui será definido os blocos do Org-roam, uma biblioteca de notas.
+*** Binds Emacs
+Aqui é uma gambiarra minha que serve para abrir o arquivo de configuração do Emacs.
 #+begin_src emacs-lisp
-(use-package org-roam
-  :ensure t
-  :custom
-  (org-roam-directory (file-truename "~/Documents/org/roam"))
+  (use-package emacs                           
   :config
-  ;; If you're using a vertical completion framework, you might want a more informative completion interface
-  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
-  (org-roam-db-autosync-enable)
-  ;; If using org-roam-protocol
-  (require 'org-roam-protocol)
-  ;;org-roam templates
-  (setq org-roam-capture-templates
-   '(     
-     ("t" "Tecnologia")
-     ("ti" "IA" plain "%?"
-      :target (file+head "tech/ia/${slug}.org" "#+title: IA: ${title}\n#+filetags: :IA:tech:\n#+author: %n \n#+date: %U\n\n")
-      :unarrowed t)
-     ("tg" "General" plain "%?"
-      :target (file+head "tech/${slug}.org" "#+title: Tech: ${title}\n#+filetags: :tech:\n#+author: %n \n#+date: %U\n\n")
-      :unarrowed t)
-     ("tc" "Code" plain "%?"
-      :target (file+head "tech/code/${slug}.org" "#+title: Code: ${title}\n#+filetags: :tech:code:programação:\n#+author: %n \n#+date: %U\n\n")
-      :unarrowed t)
-     ("to" "Offsec" plain "%?"
-      :target (file+head "tech/offsec/${slug}.org" "#+title: OffSec: ${title}\n#+filetags: :offsec:tech:infosec:\n#+author: %n \n#+date: %U\n\n")
-      :unarrowed t)
-     ("tt" "Tools" plain "%?"
-      :target (file+head "tech/offsec/${slug}.org" "#+title: Tools: ${title}\n#+filetags: :offsec:tech:infosec:\n#+author: %n \n#+date: %U\n\n")
-      :unarrowed t)
-
-     ("c" "Ciência")
-     ("cg" "Geral" plain (file "~/Documents/org/templates/science.org")
-      :target (file+head "science/${slug}.org" "#+title: Science: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :ciencia:\n#+author: %n\n#+date: %U\n\n")
-      :unarrowed t)
-     ("cf" "Física" plain (file "~/Documents/org/templates/science.org")
-      :target (file+head "science/physics/${slug}.org" "#+title: Física: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :ciencia:física:\n#+author: %n\n#+date: %U\n\n")
-      :unarrowed t)
-     ("ca" "Astrofísica" plain (file "~/Documents/org/templates/science.org")
-      :target (file+head "science/astro/${slug}.org" "#+title: Astro: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :ciencia:astrofísica:física:\n#+author: %n\n#+date: %U\n\n")
-      :unarrowed t)
-
-     ("m" "Matemática")
-     ("mg" "Geral" plain (file "~/Documents/org/templates/math.org")
-      :target (file+head "math/${slug}.org" "#+title: Matematica: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :matematica:\n#+author: %n\n#+date: %U\n\n")
-      :unarrowed t)
-     ("ma" "Algebras" plain (file "~/Documents/org/templates/math.org")
-      :target (file+head "math/${slug}.org" "#+title: Matematica: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :matematica:algebra:\n#+author: %n\n#+date: %U\n\n")
-      :unarrowed t)
-     ("me" "Equação" plain (file "~/Documents/org/templates/math.org")
-      :target (file+head "math/${slug}.org" "#+title: Matematica: ${title}\n#+startup: latexpreview inlineimages\n#+filetags: :matematica:equação:\n#+author: %n\n#+date: %U\n\n")
-      :unarrowed t)
-
-     ("i" "Idioma")
-     ("is" "Sumério" plain (file "~/Documents/org/templates/language.org")
-      :target (file+head "sumerian/${slug}.org" "#+title: Sumério: ${title}\n#+filetags: :sumerian:sumério:\n#+author: %n\n#+date: %U\n\n")
-      :unarrowed t)
-     ("ii" "Inglês" plain (file "~/Documents/org/templates/language.org")
-      :target (file+head "english/${slug}.org" "#+title: Inglês: ${title}\n#+filetags: :inglês:\n#+author: %n\n#+date: %U\n\n")
-      :unarrowed t)
-
-     ("g" "General" plain "%?"
-      :target (file+head "${slug}.org" "#+title: ${note-title}\n#+created: %U\n")
-      :unarrowed t)
-     ("l" "Leitura" plain "%?"
-      :target (file+head "${citar-citekey}.org" "#+title: ${note-title}\n#+created: %U\n")
-      :unarrowed t)))
-  :bind
-  (("C-c n l" . org-roam-buffer-toggle)
-   ("C-c n f" . org-roam-node-find)
-   ("C-c n g" . org-roam-graph)
-   ("C-c n i" . org-roam-node-insert)
-   ("C-c n c" . org-roam-node-capture)
-   ("C-c n u" . org-roam-ui-mode)
-))
+  (defun open-init-file-config ()
+    (interactive)
+    (find-file ambiente/emacs-config))
+  :bind ("C-x c" . open-init-file-config))       ;; Abrir o arquivo Org de configuração
 #+end_src
 
-~Org-roam-bibitex~
+*** ERC
+O ~ERC~ é um cliente do protocolo IRC. Aqui é a configuração do servidor padrão que será usado.
 #+begin_src emacs-lisp
-(use-package org-roam-bibtex
-  :ensure t
-  :after (org-roam)
-  :hook (org-roam-mode . org-roam-bibtex-mode)
-  :custom
-  (org-roam-bibtex-preformat-keywords
-   '("=key=" "title" "file" "author" "keywords"))
-  (orb-process-file-keyword t)
-  (orb-process-file-field t)
-  (orb-attached-file-extensions '("pdf")))
+  (setq erc-server ambiente/irc-ip)              ;; Endereço do servidor
+  (setq erc-port ambiente/irc-porta)             ;; Porta do servidor
 #+end_src
 
-~Org-roam-UI~
-Isso é uma interface para visualizar suas notas.
+** Pacotes
+*** Slack-C
+Meu pacote criado para criar projetos em C pré-configurados por template.
 #+begin_src emacs-lisp
-(use-package org-roam-ui
-  :ensure t
-  :after (org-roam)
-  :custom
-  (org-roam-ui-sync-theme t)
-  (org-roam-ui-follow t)
-  (org-roam-ui-update-on-save t)
-  (org-roam-ui-open-on-start t))
+  (use-package slack-c 
+    ;;:ensure nil
+    :vc (:url "https://github.com/rahvax/slack-c.el.git"
+  	    :rev :newest)
+    :custom
+    (slackc-dir-path "~/Documents/Forgejo/"))
 #+end_src
 
-** Projectile
-Configurações relacionadas ao criar e gerenciar projetos no Emacs.
+*** Org-Modern
+Esse pacote está sendo encontrado apenas usado com ~package-vc-install~, por algum motivo que ainda não sei.
 #+begin_src emacs-lisp
-(use-package projectile
-  :ensure t
-  :init
-  (projectile-mode)
-  :bind-keymap
-  ("C-c p" . projectile-command-map))
+  (use-package org-modern
+    :after org
+    :config
+    (global-org-modern-mode))
 #+end_src
 
-** Citar
-~Citar~
+*** Projectile
+O Projectile é um gerenciador de projetos do Emacs, que é usado aqui de forma integrada no [[Dashboard]] e com o [[Magit]].
 #+begin_src emacs-lisp
-(use-package citar
-  :ensure t
-  :custom
-  (citar-bibliography global/bibliography-list)
-  (citar-notes-paths '("~/Documents/org/roam/"))
-  (citar-open-note-function 'orb-citar-edit-note)
-  (citar-at-point-function 'embark-act)
-  ; templates
-  (citar-templates
-   '((main . "${author editor:30%sn}     ${date year issued:4}     ${title:48}")
-     (suffix . "          ${=key= id:15}    ${=type=:12}    ${tags keywords:*}")
-     (preview . "${author editor:%etal} (${year issued date}) ${title}, ${journal journaltitle publisher container-title collection-title}.\n")
-     (note . "Notes on ${author editor:%etal}, ${title}")))
-  ; advices
-  (advice-add 'org-cite-insert :after #'(lambda (args)
-					              (save-excursion (left-char) (citar-org-update-prefix-suffix))))
-  :bind
-    (("C-c b b" . citar-insert-citation)
-     ("C-c b r" . citar-insert-reference)
-     ("C-c b o" . citar-open)))
-#+end_src
-~Citar-embark~
-#+begin_src emacs-lisp
-(use-package citar-embark
-  :after (citar embark)
-  :config
-  (citar-embark-mode))
-(setq global/bibliography-list '("~/.emacs.d/file.bib"))
+  (use-package projectile
+    :ensure t
+    :init
+    (projectile-mode)
+    :bind-keymap
+    ("C-c p" . projectile-command-map))
 #+end_src
 
-~OC~
+*** Dashboard
 #+begin_src emacs-lisp
-(use-package oc
-  :custom
-  (org-cite-insert-processor 'citar)
-  (org-cite-follow-processor 'citar)
-  (org-cite-activate-processor 'citar)
-  (org-cite-global-bibliography global/bibliography-list)
-  (org-cite-export-processors '((latex biblatex)
-				(t csl)))
-  (org-cite-csl-styles-dir "~/Documents/org/csl/"))
+  (use-package dashboard
+    :ensure t
+    :config
+    (setq dashboard-banner-logo-title ambiente/emacs-welcome)                                  ;; Banner usado
+    (setq dashboard-startup-banner ambiente/emacs-banner)                                      ;; ^
+    (setq dashboard-center-content t)                                                          ;; Centralizar os conteúdos
+    (setq dashboard-items '((projects  . 5)                                                    ;; Exibir a ordem e quantia de conteúdos
+                            (recents   . 2)
+                            (agenda    . 5)))
+    (setq dashboard-vertically-center-content t)                                               ;; Centralizar as categorias
+    (setq dashboard-display-icons-p t)                                                          
+    (setq dashboard-icon-type 'all-the-icons)                                                  ;; Usar o All-The-Icons como fonte de ícones
+    (dashboard-modify-heading-icons '((recents   . "file-text")                                ;; Os emojis usados para a categoria
+                                     (projects . "file-directory") (agenda . "database")))
+    (setq dashboard-set-heading-icons t)                                                       ;; Exibir emoji de categoria
+    (setq dashboard-set-file-icons t)                                                          ;; Exibir os ícones dos arquivos
+    (setq dashboard-projects-switch-function 'projectile-switch-project-by-name)               ;; Usar a função switch do Projectile ao dar <ENTER>
+    (setq dashboard-projects-backend 'projectile)                                              ;; Usar o Projectile
+    (dashboard-setup-startup-hook)                                                             ;; Chamar o Dashboard como inicial
+  )
+  ;; Habilitar os pacotes usados de fontes de emojis
+  (use-package nerd-icons
+    :ensure t)
+  (use-package all-the-icons :ensure t)
 #+end_src
 
-~Dependências OC~
+*** Editorconfig
+Permitir as configurações personalizadas por projeto e global, para o editor. Configurações essas como tamanho do tab por blocos.
 #+begin_src emacs-lisp
-(use-package oc-biblatex
-  :after oc)
-(use-package oc-csl
-  :after oc)
-(use-package oc-natbib
-  :after oc)
+  (use-package editorconfig
+    :ensure t
+    :config
+    (editorconfig-mode 1))
 #+end_src
 
-~Citar-org-roam~
+*** Evil-Mode
+Usar os atalhos e modos do editor VIM. Para desabilitar em um arquivo é só usar =C-z=.
 #+begin_src emacs-lisp
-(use-package citar-org-roam
-  :ensure t
-  :after (citar org-roam)
-  :config
-  (citar-org-roam-mode)
-  (setq citar-org-roam-note-title-template "${author} - ${title}")
-  (setq citar-org-roam-capture-template-key "r"))
-#+end_src
-
-** Embark
-#+begin_src emacs-lisp
-;; Embark
-(use-package embark
-  :ensure t
-    :hook (eldoc-documentation-functions . embark-eldoc-first-target)
-  :custom
-  (prefix-help-command #'embark-prefix-help-command)
-  (add-to-list 'display-buffer-alist
-	       '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-		 nil
-		 (window-parameters (mode-line-format . none))))
-  :bind
-  ("C-." . embark-act)
-  ("C-;" . embark-dwim)
-  ("C-h B" . embark-bindings))
-#+end_src
-
-** Company
-#+begin_src emacs-lisp
-(use-package company
-  :ensure t
-  :hook (after-init . global-company-mode)
-  :custom
-  (company-minimum-prefix-length 2)
-  (company-tooltip-limit 14)
-  (company-tooltip-align-annotations t)
-  (company-require-match 'never)
-  (company-auto-commit nil)
-  (company-dabbrev-other-buffers nil)
-  (company-dabbrev-ignore-case nil)
-  (company-dabbrev-downcase nil))
-#+end_src
-
-~Company-box~
-#+begin_src emacs-lisp
-(use-package company-box
-  :ensure t
-  :after company
-  :hook (company-mode . company-box-mode)
-  :custom
-  (company-box-show-single-candidate t)
-  (company-box-backends-colors nil)
-  (company-box-tooltip-limit 50))
-#+end_src
-
-** Dashboard
-Responsável por hookar um buffer ao ser iniciado. Não substitui o loader do Emacs, apenas sobrescreve uma nova janela.
-#+begin_src emacs-lisp
-(use-package dashboard
-  :ensure t
-  :config
-  (setq dashboard-banner-logo-title ambiente/emacs-welcome)
-  (setq dashboard-startup-banner ambiente/emacs-banner)
-  (setq dashboard-center-content t)
-  (setq dashboard-items '((projects  . 5)
-                          (recents   . 2)
-                          (agenda    . 5)))
-  (setq dashboard-vertically-center-content t)
-  (setq dashboard-display-icons-p t)
-  (setq dashboard-icon-type 'all-the-icons)  
-  (dashboard-modify-heading-icons '((recents   . "file-text")
-                                  (projects . "file-directory") (agenda . "database")))
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-set-file-icons t)
-  (setq dashboard-projects-switch-function 'projectile-switch-project-by-name)
-  (setq dashboard-projects-backend 'projectile)
-  (dashboard-setup-startup-hook)
-)
-
-(use-package nerd-icons
-  :ensure t)
-(use-package all-the-icons :ensure t)
-#+end_src
-
-** Editorconfig
-Permitir usar os arquivos de =editorconfig= para configurar cada workspace.
-#+begin_src emacs-lisp
-(use-package editorconfig
-  :ensure t
-  :config
-  (editorconfig-mode 1))
-#+end_src
-
-** Babel
-Essa parada é insana! Isso aqui permite rodar códigos dentro de notas!
-#+begin_src emacs-lisp
-(require 'ob-C)
-(require 'ob-python)
-(use-package ob
-  :custom
-  (org-confirm-babel-evaluate nil)
-  (org-babel-do-load-languages 'org-babel-load-languages '((emacs-lisp . t)
-							   (rust . t)
-							   (C . t)
-							   (python . t)
-							   (mermaid . t))))
-(use-package ob-rust
-  :ensure t)
-;;(use-package ob-async
-;;  :ensure t)
-#+end_src
-
-** Doom themes
-Configurações do tema do Emacs, estou usando o Doom.
-#+begin_src emacs-lisp
-(use-package doom-themes
-  :ensure t
-  :config
-  (setq doom-themes-enable-bold t    
-        doom-themes-enable-italic t) 
-  ;; Carregar o tema e aplicar correção
-  (load-theme 'doom-one t)
-  (setq doom-themes-treemacs-theme "doom-atom") 
-  (doom-themes-treemacs-config)
-  (doom-themes-org-config))
-#+end_src
-
-~Doom-modeline~
-#+begin_src emacs-lisp
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
-#+end_src
-
-** Evil-mode
-Isso traz os atalhos e a dinâmica do VIM ao Emacs. Sou usuário de VIM!
-#+begin_src emacs-lisp
-(use-package evil
-  :ensure t
-  :init
-  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
-  (setq evil-want-keybinding nil)
-  :config
-  (evil-mode 1))
-#+end_src
-
-~evil-collection~
-#+begin_src emacs-lisp
-(use-package evil-collection
+  (use-package evil
+    :ensure t
+    :init
+    (setq evil-want-keybinding nil)
+    :config
+    (evil-mode 1))
+  (use-package evil-collection
   :after evil
   :ensure t
   :config
   (evil-collection-init))
 #+end_src
 
-** Wich-key
+*** VTerm
+Um terminal para o Emacs. 
 #+begin_src emacs-lisp
-(use-package which-key
-  :ensure t
-  :hook (after-init . which-key-mode)
-  :config
-  (which-key-setup-side-window-bottom))
+  (use-package vterm
+    :ensure t
+    :init
+    (defun run-vterm-custom ()
+      "This function will run vterm inside the project root or in the current directory."
+      (interactive)
+      (if (projectile-project-p) (projectile-run-vterm) (vterm default-directory)))
+
+    (defun run-vterm-other-window-custom ()
+      "This function will run vterm in other window inside the project root or in the current directory."
+      (interactive)
+      (if (projectile-project-p) (projectile-run-vterm-other-window) (vterm-other-window default-directory)))
+    
+    :bind (("C-c t" . run-vterm-custom)
+  	 ("C-c C-t" . run-vterm-other-window-custom)))
 #+end_src
 
-** Vertico
+*** Vertico
+Exibir as informações do =M-x=.
 #+begin_src emacs-lisp
-(use-package vertico
+  (use-package vertico
   :ensure t
   :init
   (vertico-mode)
   :custom
   (vertico-cycle t)
-  :bind
-  (:map vertico-map
-	("C-j" . vertico-next)
-	("C-k" . vertico-previous)
-	("C-f" . vertico-exit)
-	:map minibuffer-local-map
-	("M-h" . backward-kill-word)))
+)
 #+end_src
 
-~Dependências~
-#+begin_src emacs-lisp
-(use-package savehist
-  :ensure t
-  :init
-  (savehist-mode))
-(use-package marginalia
-  :ensure t
-  :after (vertico)
-  :init
-  (marginalia-mode)
-  :config
-  (add-to-list 'marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil)))
+*** Orderless
+Melhorar as informações exibidas no =M-x= com o [[Vertico]].
+  #+begin_src emacs-lisp
+ (use-package orderless
+    :custom
+    (completion-styles '(orderless basic))
+    (completion-category-overrides '((file (styles basic partial-completion))))
+    :config
+    (defun just-one-face (fn &rest args)
+      (let ((orderless-match-faces [completions-common-part]))
+        (apply fn args)))
+
+    (advice-add 'company-capf--candidates :around #'just-one-face)
+    (setq orderless-component-separator "[ &]"))
 #+end_src
 
-** Treemacs
-Treemacs é basicamente o gerenciador de arquivos do Emacs.
-Aqui vai encontrar toda sua configuração, é bem grande.
+*** Savehist
+Salvar os usos anteriores do =M-x=.
 #+begin_src emacs-lisp
-(use-package treemacs
-  :hook (after-init . treemacs-project-follow-mode)
-  :ensure t
-  :defer t
-  :init
-  (with-eval-after-load 'winum
-    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-  :config
-  (progn
-    (setq treemacs-collapse-dirs                   (if treemacs-python-executable 3 0)
-          treemacs-deferred-git-apply-delay        0.5
-          treemacs-directory-name-transformer      #'identity
-          treemacs-display-in-side-window          t
-          treemacs-eldoc-display                   'simple
-          treemacs-file-event-delay                2000
-          treemacs-file-extension-regex            treemacs-last-period-regex-value
-          treemacs-file-follow-delay               0.2
-          treemacs-file-name-transformer           #'identity
-          treemacs-follow-after-init               t
-          treemacs-expand-after-init               t
-          treemacs-find-workspace-method           'find-for-file-or-pick-first
-          treemacs-git-command-pipe                ""
-          treemacs-goto-tag-strategy               'refetch-index
-          treemacs-header-scroll-indicators        '(nil . "^^^^^^")
-          treemacs-hide-dot-git-directory          t
-          treemacs-indentation                     2
-          treemacs-indentation-string              " "
-          treemacs-is-never-other-window           nil
-          treemacs-max-git-entries                 5000
-          treemacs-missing-project-action          'ask
-          treemacs-move-files-by-mouse-dragging    t
-          treemacs-move-forward-on-expand          nil
-          treemacs-no-png-images                   nil
-          treemacs-no-delete-other-windows         t
-          treemacs-project-follow-cleanup          nil
-          treemacs-persist-file                    (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-          treemacs-position                        'left
-          treemacs-read-string-input               'from-child-frame
-          treemacs-recenter-distance               0.1
-          treemacs-recenter-after-file-follow      nil
-          treemacs-recenter-after-tag-follow       nil
-          treemacs-recenter-after-project-jump     'always
-          treemacs-recenter-after-project-expand   'on-distance
-          treemacs-litter-directories              '("/node_modules" "/.venv" "/.cask")
-          treemacs-project-follow-into-home        nil
-          treemacs-show-cursor                     nil
-          treemacs-show-hidden-files               t
-          treemacs-silent-filewatch                nil
-          treemacs-silent-refresh                  nil
-          treemacs-sorting                         'alphabetic-asc
-          treemacs-select-when-already-in-treemacs 'move-back
-          treemacs-space-between-root-nodes        t
-          treemacs-tag-follow-cleanup              t
-          treemacs-tag-follow-delay                1.5
-          treemacs-text-scale                      nil
-          treemacs-user-mode-line-format           nil
-          treemacs-user-header-line-format         nil
-          treemacs-wide-toggle-width               70
-          treemacs-width                           35
-          treemacs-width-increment                 1
-          treemacs-width-is-initially-locked       t
-          treemacs-workspace-switch-cleanup        nil)
-
-    ;; The default width and height of the icons is 22 pixels. If you are
-    ;; using a Hi-DPI display, uncomment this to double the icon size.
-    ;;(treemacs-resize-icons 44)
-
-    (treemacs-follow-mode t)
-    (treemacs-filewatch-mode t)
-    (treemacs-fringe-indicator-mode 'always)
-    (when treemacs-python-executable
-      (treemacs-git-commit-diff-mode t))
-
-    (pcase (cons (not (null (executable-find "git")))
-                 (not (null treemacs-python-executable)))
-      (`(t . t)
-       (treemacs-git-mode 'deferred))
-      (`(t . _)
-       (treemacs-git-mode 'simple)))
-
-    (treemacs-hide-gitignored-files-mode nil))
-  :bind
-  (:map global-map
-        ("C-x t o"   . treemacs-select-window)
-        ("C-x t 1"   . treemacs-delete-other-windows)
-        ("C-x t t"   . treemacs)
-        ("C-x t d"   . treemacs-select-directory)
-        ("C-x t B"   . treemacs-bookmark)
-        ("C-x t C-t" . treemacs-find-file)
-        ("C-x t M-t" . treemacs-find-tag)))
-(use-package treemacs-evil
-  :after (treemacs evil)
-  :ensure t)
-(use-package treemacs-projectile
-  :after (treemacs projectile)
-  :ensure t)
-(use-package treemacs-magit
-  :after (treemacs magit)
-  :ensure t)
-(use-package treemacs-icons-dired
-  :hook (dired-mode . treemacs-icons-dired-enable-once)
-  :ensure t)
-(use-package all-the-icons
-  :ensure t)
-(use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
-  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
-  :ensure t
-  :config (treemacs-set-scope-type 'Perspectives))
-(use-package treemacs-tab-bar ;;treemacs-tab-bar if you use tab-bar-mode
-  :after (treemacs)
-  :ensure t
-  :config (treemacs-set-scope-type 'Tabs))
+  (use-package savehist
+    :ensure t
+    :init
+    (savehist-mode))
 #+end_src
 
-** Vterm
-Aqui estou usando o VTERM para ter buffers de terminais.
-Porém, como tem =Evil-mode=, você pode usar =:term=.
+*** Magit
 #+begin_src emacs-lisp
-(use-package vterm
-  :ensure t
-  :init
-  (defun run-vterm-custom ()
-    "This function will run vterm inside the project root or in the current directory."
-    (interactive)
-    (if (projectile-project-p) (projectile-run-vterm) (vterm default-directory)))
-
-  (defun run-vterm-other-window-custom ()
-    "This function will run vterm in other window inside the project root or in the current directory."
-    (interactive)
-    (if (projectile-project-p) (projectile-run-vterm-other-window) (vterm-other-window default-directory)))
-  
-  :bind (("C-c t" . run-vterm-custom)
-	 ("C-c C-t" . run-vterm-other-window-custom)))
-#+end_src
-
-* Linguagens
-** Treesiter
-A configuração da "gramática" das linguagens de programação que eu uso.
-#+begin_src emacs-lisp
-(setq treesit-language-source-alist
-      '((rust "https://github.com/tree-sitter/tree-sitter-rust")
-	    (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
-	    (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-	    (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-	    (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
-	    (make "https://github.com/alemuller/tree-sitter-make")
-	    (markdown "https://github.com/ikatyang/tree-sitter-markdown")
-	    (python "https://github.com/tree-sitter/tree-sitter-python")
-	    (toml "https://github.com/tree-sitter/tree-sitter-toml")
-	    (yaml "https://github.com/ikatyang/tree-sitter-yaml")
-	    (html "https://github.com/tree-sitter/tree-sitter-html")
-	    (css "https://github.com/tree-sitter/tree-sitter-css")
-	    (json "https://github.com/tree-sitter/tree-sitter-json")
-	    (c "https://github.com/tree-sitter/tree-sitter-c")
-	    (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
-	    (cmake "https://github.com/uyha/tree-sitter-cmake")
-	    (org "https://github.com/milisims/tree-sitter-org")
-	    ))
-
-(use-package python-mode
-  :mode "\\.py\\'" :hook (python-ts-mode . eglot-ensure)
-  :init
-  (add-to-list 'org-src-lang-modes '("python" . python-ts))
-  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)))
-(use-package html-mode :mode "\\.html\\'" :hook (html-mode . eglot-ensure))
-
-(use-package js-ts-mode
-  :mode "\\.js\\'"
-  :hook ((js-ts-mode . eglot-ensure))
-  :init
-  (add-to-list 'major-mode-remap-alist '(javascript-mode . js-ts-mode))
-  (add-to-list 'org-src-lang-modes '("javascript" . js-ts)))
-
-(use-package typescript-ts-mode
-  :mode "\\.ts\\'"
-  :hook ((typescript-ts-mode . eglot-ensure))
-  :init
-  (add-to-list 'major-mode-remap-alist '(typescript-mode . typescript-ts-mode))
-  (add-to-list 'org-src-lang-modes '("typescript" . typescript-ts)))
-
-(use-package json-ts-mode
-  :mode "\\.json\\'"
-  :hook ((json-ts-mode . eglot-ensure))
-  :init
-  (add-to-list 'major-mode-remap-alist '(json-mode . json-ts-mode))
-  (add-to-list 'org-src-lang-modes '("json" . json-ts)))
-
-(use-package tsx-ts-mode
-  :mode "\\.tsx\\'"
-  :hook ((tsx-ts-mode . eglot-ensure))
-  :init
-  (add-to-list 'org-src-lang-modes '("tsx" . tsx-ts)))
-
-(use-package c-ts-mode
-  :mode "\\.c\\'"
-  :mode "\\.h\\'"
-  :hook (c-ts-mode . eglot-ensure)
-  :init
-  (add-to-list 'org-src-lang-modes '("c" . c-ts))
-  :custom
-  (c-ts-mode-indent-style 'k&r)
-  (c-ts-indent-offset 2))
-
-(use-package c++-ts-mode
-  :mode "\\.cpp\\'"
-  :mode "\\.cxx\\'"
-  :mode "\\.hpp\\'"
-  :hook ((c++-ts-mode . eglot-ensure))
-  :init
-  ; (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
-  (add-to-list 'org-src-lang-modes '("c++" . c++-ts))
-  (add-to-list 'org-src-lang-modes '("cpp" . c++-ts)))
-#+end_src
-
-** Flycheck
-#+begin_src emacs-lisp
-(use-package flycheck
-  :ensure t
-  :init
-  (global-flycheck-mode))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package flycheck-posframe
-  :ensure t
-  :after flycheck
-  :hook (flycheck-mode . flycheck-posframe-mode))
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package flycheck-popup-tip
-  :ensure t
-  :after flycheck
-  :hook (flycheck-mode . flycheck-popup-tip-mode)) 
-#+end_src
-
-#+begin_src emacs-lisp
-(use-package flycheck-eglot
-  :ensure t
-  :after (eglot flycheck)
-  :hook (eglot-managed-mode . flycheck-eglot-mode))
-#+end_src
-
-** Eglot
-#+begin_src emacs-lisp
-(use-package eglot
-  :ensure t
-  :init
-  (setq eglot-sync-connect 1
-	eglot-autoshutdown t
-	eglot-auto-display-help-buffer nil)
-  :config
-  (setq eglot-stay-out-of '(flymake))
-  (setq-default eglot-workspace-configuration
-		'(:solidity (:defaultCompiler "remote"
-			     :compileUsingLocalVersion "latest"
-           		         :compileUsingLocalVersion "solc")
-		  :rust-analyzer (:procMacro (:ignored (:leptos_macro ["server"])))))
-		    ;; '((solidity
-		    ;;    (defaultCompiler . "remote")
-		    ;;    (compileUsingRemoteVersion . "latest")
-		    ;;    (compileUsingLocalVersion . "solc")))
-  (add-to-list 'eglot-server-programs
-	           '(solidity-mode . ("vscode-solidity-server" "--stdio")))
-  (add-to-list 'eglot-server-programs
-	       '((elixir-ts-mode heex-ts-mode) . ("elixir-ls"))))
-  (add-to-list 'eglot-server-programs '((python-ts-mode python-mode) . ("pyright-langserver" "--stdio")))
-#+end_src
-
-** LSP
-#+begin_src emacs-lisp
-(use-package markdown-mode
-  :hook (markdown-mode . lsp)
-  :config
-  (require 'lsp-marksman))
-
-(add-hook 'rust-mode-hook 'eglot-ensure)
+  (use-package magit
+    :ensure t)
 #+end_src
