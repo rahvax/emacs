@@ -1,7 +1,7 @@
 #+title: Emacs init.el Literate Configuration
 #+property: header-args:emacs-lisp :tangle ~/.emacs.d/init.el
 + Para exportar utilize ~C-c C-v t~
-
+  
 * Index Of
 - [[Core]]
   - [[Configuração Editor]]
@@ -88,6 +88,7 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
     :custom
     (org-directory (file-truename "~/Documents/org/"))    ;; Diretório de trabalho do Org
     (org-habit-show-habits t)                             ;; Exibir os hábitos na agenda
+    (org-startup-truncated t)                             ;; Deixar arquivos ORG truncados
     :bind 
     ("C-c a" . org-agenda)
     ("C-c l" . org-store-link)
