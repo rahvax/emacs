@@ -104,6 +104,10 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
   			    "* TODO %? :home: \nSCHEDULED: %^t\n%i" :empy-lines-after 1)
   			   ("ps" "Saúde" entry (file+olp ambiente/org-workflow-tasks "Saúde")
   			    "* TODO %? :hlth: \nSCHEDULED: %^t\n%i" :empty-lines-after 1)
+  			   ("pr" "Rotina" entry (file+olp ambiente/org-workflow-tasks "Rotinas")
+  			    "* TODO %? :rotina: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
+
+  			   
   			   ))
     
     :bind 
