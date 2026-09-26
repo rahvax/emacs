@@ -99,6 +99,7 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
 
     ;; Modelos de capturas para notas
     (org-capture-templates '(
+  			   ;;; Tarefas pessoais
   			   ("p" "Pessoal")
   			   ("pc" "Casa" entry (file+olp ambiente/org-workflow-tasks "Casa")
   			    "* TODO %? :home: \nSCHEDULED: %^t\n%i" :empy-lines-after 1)
@@ -107,6 +108,7 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
   			   ("pr" "Rotina" entry (file+olp ambiente/org-workflow-tasks "Rotinas")
   			    "* TODO %? :rotina: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
 
+  			   ;;; Tarefas financeiras
   			   ("f" "Financeiro")
   			   ("fc" "Custo-Fixo" entry (file+olp ambiente/org-workflow-tasks "Custo-Fixo")
   			    "* TODO %? :bill: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
@@ -117,6 +119,7 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
   			   ("fr" "Receber" entry (file+olp ambiente/org-workflow-tasks "Receber")
   			    "* TODO %? :mony: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
 
+  			   ;;; Tarefas didáticas
   			   ("e" "Estudos")
   			   ("es" "Pesquisar" entry (file+olp ambiente/org-workflow-tasks "Pesquisar")
   			    "* TODO %? :sarx: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
@@ -126,8 +129,6 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
   			    "* TODO %? :note: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
   			   ("el" "Aprender" entry (file+olp ambiente/org-workflow-tasks "Aprender")
   			    "* TODO %? :lern: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
-
-  			   
   			   ))
     
     :bind 
