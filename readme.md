@@ -12,6 +12,7 @@ No Emacs usamos sequências de teclas descritas por `C-` e `M-` que são para:
 * `S-` - _Shift +_
 * `s-` - _Super(Windows) +_
 * `RET` - é o ato de dar "enter"
+
 Então o comando `C-x C-c`, para sair do Emacs, é `Ctrl + x` e depois `Ctrl + c`.
 
 ## Como Instalar
