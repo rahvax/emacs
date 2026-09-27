@@ -5,9 +5,39 @@ Essa configuração foi feita por mim, com foco e carinho em usar o Emacs como m
 
 # Emacs - Configuração Pessoal
 Minha configuração personalizada do editor GNU/Emacs, feita de uma forma que iniciantes possam usar ela.
+## Observações Importantes
+No Emacs usamos sequências de teclas descritas por `C-` e `M-` que são para:
+* `C-` - _Ctrl +_
+* `M-` - _Alt +_ 
+* `S-` - _Shift +_
+* `s-` - _Super(Windows) +_
+* `RET` - é o ato de dar "enter"
+Então o comando `C-x C-c`, para sair do Emacs, é `Ctrl + x` e depois `Ctrl + c`.
+
 ## Como Instalar
-(WIP)
+Minha configuração é dividida em dois núcleos: Core e Extensão. Isso é importante, pois qualquer pessoa que queira pegar apenas o Core e retirar as extensões vai possuir um editor de texto básico e funcional - sem grandes funções complexas ou pesadas que podem ser substituídas facilmente.
+
+### 1. Aplicando a configuração
+Ao instalar o editor Emacs na sua máquina, ele vai vir totalmente branco e bem esquisito comparado aos editores modernos. A primeira coisa que vai fazer é usar abrir um arquivo com `C-x C-f` e digitar o PATH até o arquivo `setconfig.org` desse repositório.
+
+Este é o arquivo Org de configuração do Emacs. Você pode alterar as configurações dentro dos blocos de `emacs-lisp`, onde somente eles serão exportados ignorando os comentários e anexos em Org. Muito útil para documentação e anotação. Agora você deve exportar essa configuração pela primeira vez, mas antes disso vá até a categoria *Melpa* e descomente `(package-refresh-contents)`.
+
+### 2. Criando configurações ambiente
+Abra um arquivo em `~/.emacs.d/ambiente.el` e configure as seguintes variáveis:
+```elisp
+;;; init.el --- Configurações do meu Emacs -*- lexical-binding: t; -*-
+(setq ambiente/irc-ip "IP_IRC")
+(setq ambiente/irc-porta 6669)
+(setq ambiente/emacs-welcome "Seja bem-vindo, Rahvax!")
+(setq ambiente/emacs-config "~/Documents/Forgejo/emacs/setconfig.org")
+(setq ambiente/emacs-banner "~/Documents/Forgejo/emacs/banner.txt")
+(setq ambiente/org-workflow "~/Documents/org/")
+(setq ambiente/org-workflow-tasks "~/Documents/org/tasks.org")
+(setq ambiente/org-workflow-roam "~/Documents/org/roam")
+```
+Mude para as configurações desejadas em sua máquina, e crie os diretórios solicitados, assim como os arquivos. Isso evita o Emacs reclamar com avisos sobre isso (ainda não aprendi a automatizar isso, mas irei).
 ## Pós-Instalão
 (WIP)
+
 ## Conclusão
 (WIP)
