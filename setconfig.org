@@ -316,10 +316,17 @@ O gerenciador GIT do Emacs. É muito útil para trabalhar em repositórios de fo
   (use-package org-roam
     :ensure t
     :custom
-    (org-roam-directory (file-truename "~/Documents/org/roam"))
+    (org-roam-directory (file-truename "~/Documents/org/roam"))         ;; Diretório workflow do Roam
     :bind (
-  	 ("C-c n f" . org-roam-node-find)
-  	 ("C-c n c" . org-roam-capture)
+  	 ("C-c n f" . org-roam-node-find)                             ;; Pesquisar anotações | ou criar abaixo \/
+  	 ("C-c n c" . org-roam-capture)                               ;; Criar uma nova captura por template
   	 )
+    :config
+    ;;; É o layout na hora de criar notas
+    (setq org-roam-node-display-template
+  	(concat "${title:*} "
+  		(propertize "${tags:10}" 'face 'org-tag)))
+    (org-roam-db-autosync-enable)                                       ;; Ligar a sincronização SQLITE
+    (require 'org-roam-protocol)                                        ;; Protocolo usado para exportar notas como Org-Roam-UI
     )
 #+end_src
