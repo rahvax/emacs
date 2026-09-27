@@ -331,3 +331,27 @@ Uma forma mais organizada de gerenciar e vincular as anotações em Org-Mode.
     (require 'org-roam-protocol)                                        ;; Protocolo usado para exportar notas como Org-Roam-UI
     )
 #+end_src
+
+*** Which-Key
+Uma forma boa de lembrar as binds do Emacs. Ao apertar alguma combinação, após uns segundos, ele vai exibir as possibilidades de binds que possuí.
+#+begin_src emacs-lisp
+  (use-package which-key
+  :ensure t
+  :hook (after-init . which-key-mode)
+  :config
+  (which-key-setup-side-window-bottom))
+#+end_src
+
+*** Marginalia
+Exibir comentários úteis dentro do =M-x= para as funções encontradas.
+#+begin_src emacs-lisp
+  (use-package marginalia
+    :ensure t
+    :after (vertico)    ;; Garantir que o Vertico venha primeiro
+    :init
+    (marginalia-mode)
+    :config
+    (add-to-list
+     'marginalia-annotators
+     '(marginalia-annotators-heavy marginalia-annotators-light nil)))
+#+end_src
