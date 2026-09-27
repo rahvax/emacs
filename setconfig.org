@@ -27,6 +27,7 @@
     - [[Vertico]]
     - [[Orderless]]
     - [[Savehist]]
+    - [[Org-Roam]]
 
 * Core
 ** Configuração Editor
@@ -103,7 +104,6 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
   			   ("t" "Tarefas")
   			   ("tg" "Geral" entry (file+olp ambiente/org-workflow-tasks "Geral")
   			    "* TODO %? :task: \nSCHEDULED: %^t\n%i" :empy-lines-after 1)
-
   			   ;;; Tarefas de hábitos
   			   ("r" "Rotina" entry (file+olp ambiente/org-workflow-tasks "Rotinas")
   			    "* TODO %? :habt: \nSCHEDULED: %^t.+1d\n:PROPERTIES:\n:STYLE:    habit\n:END:\n%i" :empty-lines-after 1)
@@ -309,4 +309,17 @@ O gerenciador GIT do Emacs. É muito útil para trabalhar em repositórios de fo
 #+begin_src emacs-lisp
   (use-package magit
     :ensure t)
+#+end_src
+
+*** Org-Roam
+#+begin_src emacs-lisp
+  (use-package org-roam
+    :ensure t
+    :custom
+    (org-roam-directory (file-truename "~/Documents/org/roam"))
+    :bind (
+  	 ("C-c n f" . org-roam-node-find)
+  	 ("C-c n c" . org-roam-capture)
+  	 )
+    )
 #+end_src
