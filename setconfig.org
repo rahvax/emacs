@@ -62,7 +62,7 @@ Se quiser novamente os menus do Emacs, apenas altere para =1=.
 #+end_src
 
 *** Melpa
-Descomente a linha =45=, =48= e =49= sempre que for instalar pacotes (ou iniciar a configuração)
+Descomente a linha sempre que for instalar pela primeira vez.
 #+begin_src emacs-lisp
 (require 'package)
 (add-to-list 'package-archives
@@ -312,11 +312,12 @@ O gerenciador GIT do Emacs. É muito útil para trabalhar em repositórios de fo
 #+end_src
 
 *** Org-Roam
+Uma forma mais organizada de gerenciar e vincular as anotações em Org-Mode.
 #+begin_src emacs-lisp
   (use-package org-roam
     :ensure t
     :custom
-    (org-roam-directory (file-truename "~/Documents/org/roam"))         ;; Diretório workflow do Roam
+    (org-roam-directory (file-truename ambiente/org-workflow-roam))     ;; Diretório workflow do Roam
     :bind (
   	 ("C-c n f" . org-roam-node-find)                             ;; Pesquisar anotações | ou criar abaixo \/
   	 ("C-c n c" . org-roam-capture)                               ;; Criar uma nova captura por template
