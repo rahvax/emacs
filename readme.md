@@ -36,7 +36,9 @@ Abra um arquivo em `~/.emacs.d/ambiente.el` e configure as seguintes variáveis:
 (setq ambiente/org-workflow-tasks "~/Documents/org/tasks.org")
 (setq ambiente/org-workflow-roam "~/Documents/org/roam")
 ```
-Mude para as configurações desejadas em sua máquina, e crie os diretórios solicitados, assim como os arquivos. Isso evita o Emacs reclamar com avisos sobre isso (ainda não aprendi a automatizar isso, mas irei).
+Mude para as configurações desejadas em sua máquina, e crie os diretórios solicitados, assim como os arquivos. Isso evita o Emacs reclamar com avisos sobre isso (ainda não aprendi a automatizar isso, mas irei). Após crir os arquivos e configurar o ambiente, use `C-c C-v t` dentro do `setconfig.org` para exportar a configuração e `M-x restart-emacs`. Aguarde a instalação, pode demorar.
+
+Observação: caso trave a tela, aperte várias vezes `C-g` ou `ESC` para cancelar ações, o Emacs possuí apenas um thread e isso pode congelar. Após isso irá exibir os erros, ou use `emacs --debug-init` para inicializar o Emacs com depuração.
 ## Pós-Instalão
 (WIP)
 
