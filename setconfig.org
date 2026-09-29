@@ -164,8 +164,6 @@ Aqui é uma gambiarra minha que serve para abrir o arquivo de configuração do 
     "Abrir arquivo de configuração."
     (interactive)
     (find-file ambiente/emacs-config))
-
-
   :bind ("C-x c" . open-init-file-config))       ;; Abrir o arquivo Org de configuração
 #+end_src
 
