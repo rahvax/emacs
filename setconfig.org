@@ -331,6 +331,14 @@ Uma forma mais organizada de gerenciar e vincular as anotações em Org-Mode.
   		(propertize "${tags:10}" 'face 'org-tag)))
     (org-roam-db-autosync-enable)                                       ;; Ligar a sincronização SQLITE
     (require 'org-roam-protocol)                                        ;; Protocolo usado para exportar notas como Org-Roam-UI
+    ;;; Modelos de capturas que serão usados
+    (setq org-roam-capture-templates '(
+  				     ("g" "Geral" plain "%?"
+  				      :target (file+head
+  					       "${slug}.org"
+  					       "#+title: Nota: ${title}\n#+author: G. Caelestis\n#+filetags: :nota:\n#+date: %U\n\n")
+  				      :unarrowed t)
+  				     ))
     )
 #+end_src
 
