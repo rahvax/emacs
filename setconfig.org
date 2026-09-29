@@ -422,8 +422,9 @@ Um checker para syntax. Isso já resume praticamente.
 #+begin_src emacs-lisp
   (use-package flycheck
     :ensure t
-    :init                      ;; Hooks para antes do pacote ser carregado
-    (global-flycheck-mode))    ;; Ativar o flycheck globalmente
+    :init                               ;; Hooks para antes do pacote ser carregado
+    (global-flycheck-mode)              ;; Ativar o flycheck globalmente
+    (global-flycheck-eglot-mode 1))     ;; Integrar a saída do Eglot no Flycheck (substituí o pacote Flycheck-Eglot)
 #+end_src
 
 *** Flycheck Popup
