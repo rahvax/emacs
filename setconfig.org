@@ -333,14 +333,23 @@ Uma forma mais organizada de gerenciar e vincular as anotações em Org-Mode.
     (require 'org-roam-protocol)                                        ;; Protocolo usado para exportar notas como Org-Roam-UI
     ;;; Modelos de capturas que serão usados
     (setq org-roam-capture-templates '(
-  				     ("g" "Geral" plain (file "~/Documents/org/templates/notas.org") 
-  				      :target (file "${slug}.org")
-  				      :unarrowed t)
+  				     ("g" "Geral" plain (file "~/Documents/org/templates/notas.org")                           ;; Usando um template em arquivo
+  				      :target (file "${slug}.org")                                                             ;; Arquivo a ser criado
+  				      :unarrowed t)                                                                            ;; Exibir tudo no buffer de captura
 
   				     ("t" "Tecnologia")
-  				     ("tf" "Ferramentas" plain (file "~/Documents/org/templates/tool.org")
-  				      :target (file "${slug.org}")
+  				     ("tf" "Ferramentas" plain "%?"
+  				      :target (file+head "tech/tools/${slug}.org"                                             ;; head permite colocar um cabeçalho
+  							 "#+title: Tools: ${title}\n#+date: %U\n#+filetags: :tools:\n\n")     ;; Eis o cabeçalho
   				      :unarrowed t)
+  				     ("tr" "Redes" plain "%?"
+  				      :target (file+head "tech/net/$(slug).org"
+  							 "#+title: Network: $(title)\n#+date: %U\n#+filetags: :network:\n\n")
+  				      :unarrowed t)
+  				     ("tg" "Geral" plain (file "~/Documents/org/templates/tech.org")
+  				      :target (file "tech/$(slug).org")
+  				      :unarrowed t)
+
   				     ))
     )
 #+end_src
