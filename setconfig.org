@@ -33,7 +33,8 @@
       - [[Marginalia]]
   - [[Extensão]]
     - [[Linguagens]]
-      - [[Treesiter]] 
+      - [[Treesiter]]
+      - [[Major mode]]
     - [[Checker & LSP]]
       - [[Flycheck]]
       - [[Flycheck Popup]]
@@ -418,6 +419,7 @@ Definindo a lista de repositórios para download.
 #+end_src
 
 *** Major mode
+Major mode é basicamente o tipo do buffer, que aqui será tratado com os modos do [[Treesiter]].
 #+begin_src emacs-lisp
   (use-package c-ts-mode
             ;; Extensões que o Major mode vai ser usado
