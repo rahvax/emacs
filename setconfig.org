@@ -436,3 +436,11 @@ Exibir um pop-up dos avisos do Flycheck. Ele usa o ~popup.el~, diferente do ~pos
     :hook (flycheck-mode . flycheck-popup-tip-mode))
 #+end_src
 *** Eglot
+É o intermediário entre o LSP e o Emacs (que vai ser tratado pelo [[Flycheck]] as saídas).
+#+begin_src emacs-lisp
+  (use-package eglot
+    :hook (                                  ;; Chamar os major mode
+           (c-ts-mode . eglot-ensure)
+           (c++-ts-mode . eglot-ensure)
+  	 ))
+#+end_src
