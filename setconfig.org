@@ -32,6 +32,9 @@
       - [[Which-Key]]
       - [[Marginalia]]
   - [[Extensão]]
+    - [[Linguagens]]
+      - [[Treesiter]] 
+    - [[Checker & LSP]]
 	
 * Core
 ** Configuração Editor
@@ -411,6 +414,13 @@ Definindo a lista de repositórios para download.
   		(cmake "https://github.com/uyha/tree-sitter-cmake")
   		))
 #+end_src
-** Snips & Completar
+** Checker & LSP
 *** Flycheck
+Um checker para syntax. Isso já resume praticamente.
+#+begin_src emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :init                      ;; Hooks para antes do pacote ser carregado
+    (global-flycheck-mode))    ;; Ativar o flycheck globalmente
+#+end_src
 *** Eglot
