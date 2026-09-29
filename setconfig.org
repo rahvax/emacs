@@ -35,6 +35,8 @@
     - [[Linguagens]]
       - [[Treesiter]] 
     - [[Checker & LSP]]
+      - [[Flycheck]]
+      - [[Flycheck Popup]]
 	
 * Core
 ** Configuração Editor
@@ -424,12 +426,12 @@ Um checker para syntax. Isso já resume praticamente.
     (global-flycheck-mode))    ;; Ativar o flycheck globalmente
 #+end_src
 
-*** Flycheck Posframe
-Usa um pop-up (frame) para exibir as mensagens do Flycheck. Evitando precisar ocupar o ~minibuffer~ ou criar buffers extras.
+*** Flycheck Popup
+Exibir um pop-up dos avisos do Flycheck. Ele usa o ~popup.el~, diferente do ~posframe.el~ do ~Flycheck-posframe~. É mais básico para meu uso.
 #+begin_src emacs-lisp
-  (use-package flycheck-posframe
-  	  :ensure t
-  	  :after flycheck                                    ;; Garantir o pacote flycheck
-  	  :hook (flycheck-mode . flycheck-posframe-mode))    ;; Hook para chamar o flycheck-posframe-mode 
+  (use-package flycheck-popup-tip
+    :ensure t
+    :after flycheck
+    :hook (flycheck-mode . flycheck-popup-tip-mode))
 #+end_src
 *** Eglot
