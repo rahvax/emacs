@@ -31,7 +31,8 @@
       - [[Org-Roam]]
       - [[Which-Key]]
       - [[Marginalia]]
-
+  - [[Extensão]]
+	
 * Core
 ** Configuração Editor
 *** Inicializar arquivos
@@ -391,4 +392,25 @@ Exibir comentários úteis dentro do =M-x= para as funções encontradas.
     (add-to-list
      'marginalia-annotators
      '(marginalia-annotators-heavy marginalia-annotators-light nil)))
+#+end_src
+
+* Extensão
+** Linguagens
+*** Treesiter
+Definindo a lista de repositórios para download.
+#+begin_src emacs-lisp
+  (setq treesit-language-source-alist
+  	      '(
+  		(c "https://github.com/tree-sitter/tree-sitter-c")
+  		(make "https://github.com/alemuller/tree-sitter-make")
+  		(markdown "https://github.com/ikatyang/tree-sitter-markdown")
+  		(python "https://github.com/tree-sitter/tree-sitter-python")
+  		(toml "https://github.com/tree-sitter/tree-sitter-toml")
+  		(yaml "https://github.com/ikatyang/tree-sitter-yaml")
+  		(html "https://github.com/tree-sitter/tree-sitter-html")
+  		(css "https://github.com/tree-sitter/tree-sitter-css")
+  		(json "https://github.com/tree-sitter/tree-sitter-json")
+  		(cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+  		(cmake "https://github.com/uyha/tree-sitter-cmake")
+  		))
 #+end_src
