@@ -416,6 +416,20 @@ Definindo a lista de repositórios para download.
   		(cmake "https://github.com/uyha/tree-sitter-cmake")
   		))
 #+end_src
+
+*** Major mode
+#+begin_src emacs-lisp
+  (use-package c-ts-mode
+            ;; Extensões que o Major mode vai ser usado
+  	  :mode "\\.c\\'"
+  	  :mode "\\.h\\'"
+  	  :hook (c-ts-mode . eglot-ensure)                 ;; Chamar EGLOT-ENSURE sempre que o C-TS for usado
+  	  :init
+  	  (add-to-list 'org-src-lang-modes '("c" . c-ts))  ;; Para listar o C-TS em blocos do Babel em Orgs
+  	  :custom
+  	  (c-ts-mode-indent-style 'k&r)                    ;; Indentação estilo K&R (tradicional)
+  	  (c-ts-indent-offset 2))                          ;; Definir 2 espaços para os tabs
+#+end_src
 ** Checker & LSP
 *** Flycheck
 Um checker para syntax. Isso já resume praticamente.
