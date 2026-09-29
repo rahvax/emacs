@@ -349,7 +349,6 @@ Uma forma mais organizada de gerenciar e vincular as anotações em Org-Mode.
   				     ("tg" "Geral" plain (file "~/Documents/org/templates/tech.org")
   				      :target (file "tech/$(slug).org")
   				      :unarrowed t)
-
   				     ))
     )
 #+end_src
