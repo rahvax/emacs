@@ -423,4 +423,13 @@ Um checker para syntax. Isso já resume praticamente.
     :init                      ;; Hooks para antes do pacote ser carregado
     (global-flycheck-mode))    ;; Ativar o flycheck globalmente
 #+end_src
+
+*** Flycheck Posframe
+Usa um pop-up (frame) para exibir as mensagens do Flycheck. Evitando precisar ocupar o ~minibuffer~ ou criar buffers extras.
+#+begin_src emacs-lisp
+  (use-package flycheck-posframe
+  	  :ensure t
+  	  :after flycheck                                    ;; Garantir o pacote flycheck
+  	  :hook (flycheck-mode . flycheck-posframe-mode))    ;; Hook para chamar o flycheck-posframe-mode 
+#+end_src
 *** Eglot
