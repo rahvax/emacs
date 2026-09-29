@@ -167,6 +167,11 @@ Aqui é uma gambiarra minha que serve para abrir o arquivo de configuração do 
   :bind ("C-x c" . open-init-file-config))       ;; Abrir o arquivo Org de configuração
 #+end_src
 
+Uma gambiarra para definir uma keybind para ~restart-emacs~.
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-c r") #'restart-emacs)
+#+end_src
+
 *** ERC
 O ~ERC~ é um cliente do protocolo IRC. Aqui é a configuração do servidor padrão que será usado.
 #+begin_src emacs-lisp
