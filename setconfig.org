@@ -145,6 +145,7 @@ Essa é uma função minha que criei para criar arquivos como se fosse o Org-Roa
   (use-package emacs
     :preface
     (defun open-new-latex-file ()
+      "Abrir um novo arquivo Latex dentro do roam."
       (interactive)
       (let* ((directory-name "~/Documents/org/roam/latex/")
   	   (file-name (read-from-minibuffer "Filename: ")))
@@ -160,8 +161,11 @@ Aqui é uma gambiarra minha que serve para abrir o arquivo de configuração do 
   (use-package emacs                           
   :config
   (defun open-init-file-config ()
+    "Abrir arquivo de configuração."
     (interactive)
     (find-file ambiente/emacs-config))
+
+
   :bind ("C-x c" . open-init-file-config))       ;; Abrir o arquivo Org de configuração
 #+end_src
 
