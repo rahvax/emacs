@@ -6,6 +6,7 @@
   - [[Core]]
     - [[Configuração Editor]]
       - [[Inicializar arquivos]]
+      - [[Backup]]
       - [[Ambiente UTF]]
       - [[Manter pacotes recentes]]
       - [[Uteis nativos]]
