@@ -411,3 +411,6 @@ Definindo a lista de repositórios para download.
   		(cmake "https://github.com/uyha/tree-sitter-cmake")
   		))
 #+end_src
+** Snips & Completar
+*** Flycheck
+*** Eglot
