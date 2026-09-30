@@ -38,6 +38,7 @@
     - [[Checker & LSP]]
       - [[Flycheck]]
       - [[Flycheck Popup]]
+      - [[Company]]
 	
 * Core
 ** Configuração Editor
@@ -420,6 +421,7 @@ Definindo a lista de repositórios para download.
 
 *** Major mode
 Major mode é basicamente o tipo do buffer, que aqui será tratado com os modos do [[Treesiter]].
+~C~
 #+begin_src emacs-lisp
   (use-package c-ts-mode
             ;; Extensões que o Major mode vai ser usado
@@ -432,6 +434,7 @@ Major mode é basicamente o tipo do buffer, que aqui será tratado com os modos 
   	  (c-ts-mode-indent-style 'k&r)                    ;; Indentação estilo K&R (tradicional)
   	  (c-ts-indent-offset 2))                          ;; Definir 2 espaços para os tabs
 #+end_src
+
 ** Checker & LSP
 *** Flycheck
 Um checker para syntax. Isso já resume praticamente.
@@ -460,3 +463,11 @@ Exibir um pop-up dos avisos do Flycheck. Ele usa o ~popup.el~, diferente do ~pos
            (c++-ts-mode . eglot-ensure)
   	 ))
 #+end_src
+
+*** Company
+#+begin_src emacs-lisp
+  (use-package company
+  	  :ensure t
+  	  :hook (after-init . global-company-mode)
+  	  )
+	  #+end_src
