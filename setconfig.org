@@ -498,6 +498,7 @@ Criar ~frames~ para exibir as saídas do completion e relacionados.
        treemacs-indentation 2                 ;; Tabs dos conteúdos
        treemacs-show-hidden-files t           ;; Nome explicativo
        treemacs-follow-after-init t           ;; Seguir o arquivo
+       treemacs-project-follow-mode t         ;; Seguir os arquivos do projeto
        ))
     (treemacs-follow-mode t)                  ;; Habilitar que o Treemacs siga os arquivos
 
