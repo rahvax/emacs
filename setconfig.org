@@ -499,6 +499,7 @@ Criar ~frames~ para exibir as saídas do completion e relacionados.
        treemacs-show-hidden-files t           ;; Nome explicativo
        treemacs-follow-after-init t           ;; Seguir o arquivo
        ))
+    (treemacs-follow-mode t)                  ;; Habilitar que o Treemacs siga os arquivos
 
     :bind (:map
   	 global-map
