@@ -14,6 +14,7 @@
       - [[Org-Agenda]]
       - [[Org-Mode]]
       - [[Tema Emacs]]
+      - [[Dired]]
     - [[Funções Elisp]]
       - [[Criar LaTeX]]
       - [[Binds Emacs]]
@@ -37,9 +38,10 @@
       - [[Major mode]]
     - [[Checker & LSP]]
       - [[Flycheck]]
-      - [[Flycheck Popup]]
+      - [[Flycheck Posframe]]
       - [[Company]]
-	
+    - [[Personalizados]]
+      - [[Treemacs]]
 * Core
 ** Configuração Editor
 *** Inicializar arquivos
@@ -138,6 +140,10 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
   ;;(load-theme 'modus-vivendi t)
   ;;(load-theme 'tsdh-dark t)
   (load-theme 'wombat t)
+#+end_src
+
+*** Dired
+#+begin_src emacs-lisp
 #+end_src
 
 ** Funções Elisp
@@ -446,13 +452,13 @@ Um checker para syntax. Isso já resume praticamente.
     (global-flycheck-eglot-mode 1))     ;; Integrar a saída do Eglot no Flycheck (substituí o pacote Flycheck-Eglot)
 #+end_src
 
-*** Flycheck Popup
-Exibir um pop-up dos avisos do Flycheck. Ele usa o ~popup.el~, diferente do ~posframe.el~ do ~Flycheck-posframe~. É mais básico para meu uso.
+*** Flycheck Posframe
+Criar ~frames~ para exibir as saídas do completion e relacionados.
 #+begin_src emacs-lisp
-  (use-package flycheck-popup-tip
-    :ensure t
-    :after flycheck
-    :hook (flycheck-mode . flycheck-popup-tip-mode))
+  (use-package flycheck-posframe
+  	  :ensure t
+  	  :after flycheck
+  	  :hook (flycheck-mode . flycheck-posframe-mode))
 #+end_src
 *** Eglot
 É o intermediário entre o LSP e o Emacs (que vai ser tratado pelo [[Flycheck]] as saídas).
@@ -471,3 +477,41 @@ Exibir um pop-up dos avisos do Flycheck. Ele usa o ~popup.el~, diferente do ~pos
   	  :hook (after-init . global-company-mode)
   	  )
 	  #+end_src
+
+** Personalizados
+*** Treemacs
+#+begin_src emacs-lisp
+  (use-package treemacs
+    :ensure t
+    :defer t            ;; Adiar o carregamento até ser necessário
+    :init               ;; Garantir que seja executado as instruções abaixo antes do pacote
+    ;;; Garantir o carregamento do WINUM e definir a keymap
+    (with-eval-after-load 'winum 
+                          (define-key winum-keymap (kbd "M-0") #'treemacs-select-window)) 
+    :config             ;; Executa a configuração após carregar o pacote 
+    (progn
+      (setq
+       treemacs-position 'left                ;; Ficar na vertical esquerda
+       treemacs-indentation 2                 ;; Tabs dos conteúdos
+       treemacs-show-hidden-files t           ;; Nome explicativo
+       treemacs-follow-after-init t           ;; Seguir o arquivo
+       ))
+
+    :bind (:map
+  	 global-map
+  	 ("M-0" . treemacs-select-window)
+  	 ("C-x t t" . treemacs))
+    )
+  ;; Pacote responsável pela integração com o evil-mode
+  (use-package treemacs-evil
+    :after (treemacs evil)
+    :ensure t)
+  ;; Pacote responsável para integrar o Projectile
+  (use-package treemacs-projectile
+    :after (treemacs projectile)
+    :ensure t)
+  ;; Para o Magit
+  (use-package treemacs-magit
+    :after (treemacs magit)
+    :ensure t)
+#+end_src
