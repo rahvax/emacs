@@ -507,6 +507,7 @@ Criar ~frames~ para exibir as saídas do completion e relacionados.
     )
   #+end_src
 
+Integrações do [[Treemacs]] com outros pacotes do Emacs.
 *** Treemacs-evil
 #+begin_src emacs-lisp
   ;; Pacote responsável pela integração com o evil-mode
