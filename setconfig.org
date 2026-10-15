@@ -42,6 +42,9 @@
       - [[Company]]
     - [[Personalizados]]
       - [[Treemacs]]
+      - [[Treemacs-evil]]
+      - [[Treemacs-magit]]
+      - [[Treemacs-projectile]]
 * Core
 ** Configuração Editor
 *** Inicializar arquivos
@@ -502,14 +505,24 @@ Criar ~frames~ para exibir as saídas do completion e relacionados.
   	 ("M-0" . treemacs-select-window)
   	 ("C-x t t" . treemacs))
     )
+  #+end_src
+
+*** Treemacs-evil
+#+begin_src emacs-lisp
   ;; Pacote responsável pela integração com o evil-mode
   (use-package treemacs-evil
     :after (treemacs evil)
     :ensure t)
+    #+end_src
+*** Treemacs-projectile
+#+begin_src emacs-lisp
   ;; Pacote responsável para integrar o Projectile
   (use-package treemacs-projectile
     :after (treemacs projectile)
     :ensure t)
+    #+end_src
+*** Treemacs-magit
+#+begin_src emacs-lisp
   ;; Para o Magit
   (use-package treemacs-magit
     :after (treemacs magit)
