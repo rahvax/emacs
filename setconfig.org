@@ -107,6 +107,7 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
 #+end_src
 
 *** Org-Mode
+Configurações referentes ao Org-Mode e suas integrações nativas.
 #+begin_src emacs-lisp
   (use-package org
     :ensure t
@@ -147,10 +148,12 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
 #+end_src
 
 *** Dired
+Gerenciador e árvore de diretórios.
 #+begin_src emacs-lisp
 #+end_src
 
 *** Modeline
+A barrinha inferior do Emacs. Um tema que imita o Doom-modeline só que mais low profile.
 #+begin_src  emacs-lisp
     (use-package mood-line
       :ensure t
