@@ -199,8 +199,8 @@ Uma gambiarra para definir uma keybind para ~restart-emacs~.
 *** ERC
 O ~ERC~ é um cliente do protocolo IRC. Aqui é a configuração do servidor padrão que será usado.
 #+begin_src emacs-lisp
-  (setq erc-server ambiente/irc-ip)              ;; Endereço do servidor
-  (setq erc-port ambiente/irc-porta)             ;; Porta do servidor
+  (setq erc-server ambiente/irc-ip                 ;; Endereço do servidor
+        erc-port   ambiente/irc-porta)             ;; Porta do servidor
 #+end_src
 
 ** Pacotes
@@ -240,22 +240,24 @@ O Projectile é um gerenciador de projetos do Emacs, que é usado aqui de forma 
   (use-package dashboard
     :ensure t
     :config
-    (setq dashboard-banner-logo-title ambiente/emacs-welcome)                                  ;; Banner usado
-    (setq dashboard-startup-banner ambiente/emacs-banner)                                      ;; ^
-    (setq dashboard-center-content t)                                                          ;; Centralizar os conteúdos
-    (setq dashboard-items '((projects  . 5)                                                    ;; Exibir a ordem e quantia de conteúdos
-                            (recents   . 2)
-                            (agenda    . 5)))
-    (setq dashboard-vertically-center-content t)                                               ;; Centralizar as categorias
-    (setq dashboard-display-icons-p t)                                                          
-    (setq dashboard-icon-type 'all-the-icons)                                                  ;; Usar o All-The-Icons como fonte de ícones
-    (dashboard-modify-heading-icons '((recents   . "file-text")                                ;; Os emojis usados para a categoria
+    (setq
+     dashboard-banner-logo-title ambiente/emacs-welcome                                   ;; Banner usado
+     dashboard-startup-banner ambiente/emacs-banner                                             ;; ^
+     dashboard-center-content t                                                                 ;; Centralizar os conteúdos
+     dashboard-items '((projects  . 5)                                                          ;; Exibir a ordem e quantia de conteúdos
+  		     (recents   . 2)
+  		     (agenda    . 5))
+     dashboard-vertically-center-content t                                                      ;; Centralizar as categorias
+     dashboard-display-icons-p t                                                          
+     dashboard-icon-type 'all-the-icons                                                         ;; Usar o All-The-Icons como fonte de ícones
+     dashboard-set-heading-icons t                                                              ;; Exibir emoji de categoria
+     dashboard-set-file-icons t                                                                 ;; Exibir os ícones dos arquivos
+     dashboard-projects-switch-function 'projectile-switch-project-by-name                      ;; Usar a função switch do Projectile ao dar <ENTER>
+     dashboard-projects-backend 'projectile)                                                    ;; Usar o Projectile
+    
+    (dashboard-modify-heading-icons '((recents   . "file-text")                                 ;; Os emojis usados para a categoria
                                      (projects . "file-directory") (agenda . "database")))
-    (setq dashboard-set-heading-icons t)                                                       ;; Exibir emoji de categoria
-    (setq dashboard-set-file-icons t)                                                          ;; Exibir os ícones dos arquivos
-    (setq dashboard-projects-switch-function 'projectile-switch-project-by-name)               ;; Usar a função switch do Projectile ao dar <ENTER>
-    (setq dashboard-projects-backend 'projectile)                                              ;; Usar o Projectile
-    (dashboard-setup-startup-hook)                                                             ;; Chamar o Dashboard como inicial
+    (dashboard-setup-startup-hook)                                                              ;; Chamar o Dashboard como inicial
   )
   ;; Habilitar os pacotes usados de fontes de emojis
   (use-package nerd-icons
