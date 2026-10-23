@@ -14,7 +14,6 @@
       - [[Org-Agenda]]
       - [[Org-Mode]]
       - [[Tema Emacs]]
-      - [[Dired]]
       - [[Modeline]]
     - [[Funções Elisp]]
       - [[Criar LaTeX]]
@@ -145,11 +144,6 @@ Configurações referentes ao Org-Mode e suas integrações nativas.
   ;;(load-theme 'modus-vivendi t)
   ;;(load-theme 'tsdh-dark t)
   (load-theme 'wombat t)
-#+end_src
-
-*** Dired
-Gerenciador e árvore de diretórios.
-#+begin_src emacs-lisp
 #+end_src
 
 *** Modeline
