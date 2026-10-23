@@ -152,11 +152,11 @@ O arquivo =tasks.org= é para os headers Org da agenda onde as tarefas são salv
 
 *** Modeline
 #+begin_src  emacs-lisp
-  (use-package sml
-    :ensure t
-    :config
-    (sml/setup)
-    )
+    (use-package mood-line
+      :ensure t
+      :config
+      (mood-line-mode)
+      )
 #+end_src
 
 ** Funções Elisp
