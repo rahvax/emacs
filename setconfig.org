@@ -483,6 +483,7 @@ Criar ~frames~ para exibir as saídas do completion e relacionados.
 #+end_src
 
 *** Company
+Um complete para o Emacs, e vai usar os backends como o [[Eglot]];
 #+begin_src emacs-lisp
   (use-package company
   	  :ensure t
