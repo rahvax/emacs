@@ -493,6 +493,7 @@ Um complete para o Emacs, e vai usar os backends como o [[Eglot]];
 
 ** Personalizados
 *** Treemacs
+Exibir a árvore de diretórios.
 #+begin_src emacs-lisp
   (use-package treemacs
     :ensure t
