@@ -27,14 +27,18 @@ Este é o arquivo Org de configuração do Emacs. Você pode alterar as configur
 Abra um arquivo em `~/.emacs.d/ambiente.el` e configure as seguintes variáveis:
 ```elisp
 ;;; init.el --- Configurações do meu Emacs -*- lexical-binding: t; -*-
-(setq ambiente/irc-ip "IP_IRC")
-(setq ambiente/irc-porta 6669)
-(setq ambiente/emacs-welcome "Seja bem-vindo, Rahvax!")
-(setq ambiente/emacs-config "~/Documents/Forgejo/emacs/setconfig.org")
-(setq ambiente/emacs-banner "~/Documents/Forgejo/emacs/banner.txt")
-(setq ambiente/org-workflow "~/Documents/org/")
-(setq ambiente/org-workflow-tasks "~/Documents/org/tasks.org")
-(setq ambiente/org-workflow-roam "~/Documents/org/roam")
+;;; Commentary:
+;;; Mude as configurações do ambiente, conforme for necessário.
+;;; Code:
+(setq ambiente/irc-ip "IP_AQUI"
+      ambiente/irc-porta 6669
+      ambiente/emacs-welcome "Seja bem-vindo, Rahvax!"                    ;; Mensagem carregada pelo dashboard
+      ambiente/emacs-config "~/Documents/Forgejo/emacs/setconfig.org"     ;; Diretório da configuração 
+      ambiente/emacs-banner "~/Documents/Forgejo/emacs/banner.txt"        ;; Banner do dashboard
+      ambiente/org-workflow "~/Documents/org/"                            ;; Ambiente do Org
+      ambiente/org-workflow-tasks "~/Documents/org/tasks.org"             ;; Arquivo de tarefas
+      ambiente/org-workflow-roam "~/Documents/org/roam")                  ;; Diretório do Org-Roam
+;;; ambiente.el ends here
 ```
 Mude para as configurações desejadas em sua máquina, e crie os diretórios solicitados, assim como os arquivos. Isso evita o Emacs reclamar com avisos sobre isso (ainda não aprendi a automatizar isso, mas irei). Após crir os arquivos e configurar o ambiente, use `C-c C-v t` dentro do `setconfig.org` para exportar a configuração e `M-x restart-emacs`. Aguarde a instalação, pode demorar.
 
