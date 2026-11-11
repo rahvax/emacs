@@ -210,7 +210,7 @@ Meu pacote criado para criar projetos em C pré-configurados por template.
   (use-package slack-c 
     ;;:ensure nil
     :vc (:url "https://github.com/rahvax/slack-c.el.git"
-  	    :rev :newest)
+         :rev :newest)
     :custom
     (slackc-dir-path "~/Documents/Forgejo/"))
 #+end_src
@@ -260,8 +260,7 @@ O Projectile é um gerenciador de projetos do Emacs, que é usado aqui de forma 
     (dashboard-setup-startup-hook)                                                              ;; Chamar o Dashboard como inicial
   )
   ;; Habilitar os pacotes usados de fontes de emojis
-  (use-package nerd-icons
-    :ensure t)
+  (use-package nerd-icons :ensure t)
   (use-package all-the-icons :ensure t)
 #+end_src
 
@@ -318,8 +317,7 @@ Exibir as informações do =M-x=.
   :init
   (vertico-mode)
   :custom
-  (vertico-cycle t)
-)
+  (vertico-cycle t))
 #+end_src
 
 *** Orderless
@@ -350,8 +348,7 @@ Salvar os usos anteriores do =M-x=.
 *** Magit
 O gerenciador GIT do Emacs. É muito útil para trabalhar em repositórios de forma bem mais flexível.
 #+begin_src emacs-lisp
-  (use-package magit
-    :ensure t)
+  (use-package magit :ensure t)
 #+end_src
 
 *** Org-Roam
@@ -487,8 +484,7 @@ Um complete para o Emacs, e vai usar os backends como o [[Eglot]];
 #+begin_src emacs-lisp
   (use-package company
   	  :ensure t
-  	  :hook (after-init . global-company-mode)
-  	  )
+  	  :hook (after-init . global-company-mode))
 	  #+end_src
 
 ** Personalizados
